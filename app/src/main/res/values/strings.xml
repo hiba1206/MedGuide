@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">MedGuide</string>
+    <string name="logo_desc">MedGuide</string>
+    <string name="login_choices">Numéro de téléphone, Nom d\'utilisateur ou email </string>
+    <string name="signin">Vous n\'avez pas de compte ? Inscrivez-vous</string>
+    <string name="forgot_password">Mot de pass oublié?</string>
+    <string name="login">Se connecter</string>
+    <string name="password">Mot de passe</string>
+    <string name="sidebar">menu</string>
+    <string name="gmail_connect">connect with gmail</string>
+    <string name="connect_with_gmail">connect_with_gmail</string>
+</resources>
