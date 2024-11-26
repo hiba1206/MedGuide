@@ -2,70 +2,72 @@ package com.example.medguide;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-public class MainActivity extends AppCompatActivity {
+public class SecondActivity extends AppCompatActivity {
+
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
-    LinearLayout googleBtn;
+    TextView name,email;
+    Button signOutBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_second);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        googleBtn = findViewById(R.id.google_btn);
+        name = findViewById(R.id.name);
+        email = findViewById(R.id.email);
+        signOutBtn = findViewById(R.id.signout);
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this,gso);
 
-        googleBtn.setOnClickListener(v -> signIn());
-
-    }
-
-    void signIn () {
-        Intent signInIntent = gsc.getSignInIntent();
-        startActivityForResult(signInIntent,1000);
-    }
-
-    @Override
-    protected  void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
-        if(requestCode == 1000) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-
-            try {
-                task.getResult(ApiException.class);
-                navigateToSecondActivity();
-            } catch (ApiException e) {
-                Toast.makeText(getApplicationContext(),"Something went wrong", Toast.LENGTH_SHORT).show(); //en fr
-            }
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        if(acct !=null) {
+            String personName = acct.getDisplayName();
+            String personEmail = acct.getEmail();
+            name.setText(personName);
+            email.setText(personEmail);
         }
+
+        signOutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signOut();
+            }
+        });
     }
 
-    void navigateToSecondActivity() {
-        finish();
-        Intent intent = new Intent(MainActivity.this,SecondActivity.class);
-        startActivity(intent);
+    void signOut() {
+        gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                finish();
+                startActivity(new Intent(SecondActivity.this,MainActivity.class));
+            }
+        });
     }
 }
-
-

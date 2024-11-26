@@ -109,5 +109,35 @@
         android:textColor="#00838F"
         android:textSize="14sp" />
 
+    <!-- Google Sign-In Button -->
+    <LinearLayout
+        android:id="@+id/google_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@drawable/rounded_edit_text"
+        android:padding="12dp"
+        android:layout_centerInParent="true"
+        android:elevation="0dp"
+        android:layout_below="@+id/signup_text"
+        android:layout_marginTop="50dp">
 
-</RelativeLayout>
+    <ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@android:color/white"
+        android:src="@drawable/google"
+        android:elevation="0dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/continue_with_google"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:gravity="center" />
+</LinearLayout>
+
+    </RelativeLayout>

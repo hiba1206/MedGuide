@@ -7,6 +7,5 @@
     <string name="login">Se connecter</string>
     <string name="password">Mot de passe</string>
     <string name="sidebar">menu</string>
-    <string name="gmail_connect">connect with gmail</string>
-    <string name="connect_with_gmail">connect_with_gmail</string>
+    <string name="continue_with_google">continue avec google</string>
 </resources>
