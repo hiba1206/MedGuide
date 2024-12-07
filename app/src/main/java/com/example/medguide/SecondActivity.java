@@ -22,17 +22,17 @@ import com.google.android.gms.tasks.Task;
 
 public class SecondActivity extends AppCompatActivity {
 
-    GoogleSignInOptions gso;
-    GoogleSignInClient gsc;
-    TextView name,email;
-    Button signOutBtn;
+   // GoogleSignInOptions gso;
+    //GoogleSignInClient gsc;
+    //TextView name,email;
+    //Button signOutBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_second);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        /* ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -58,10 +58,10 @@ public class SecondActivity extends AppCompatActivity {
             public void onClick(View v) {
                 signOut();
             }
-        });
+        }); */
     }
 
-    void signOut() {
+/*    void signOut() {
         gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -69,5 +69,5 @@ public class SecondActivity extends AppCompatActivity {
                 startActivity(new Intent(SecondActivity.this,MainActivity.class));
             }
         });
-    }
+    } */
 }
