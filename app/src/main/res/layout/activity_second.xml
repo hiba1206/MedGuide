@@ -16,7 +16,7 @@
         android:layout_height="48dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="2dp"
         android:layout_marginTop="10dp"
         android:adjustViewBounds="true"
         android:background="@android:color/transparent"
@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="370dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/logo_desc"
         android:src="@drawable/medguide"
@@ -42,11 +42,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/questionText"
-        android:textSize="18sp"
+        android:textSize="25sp"
+        android:textStyle="bold"
         android:textColor="#000000"
         android:layout_below="@id/logo"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="220dp"
+        android:layout_marginTop="250dp"
         android:paddingBottom="20dp" />
 
     <!-- Input field -->
@@ -55,7 +56,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="90dp"
         android:background="@drawable/rounded_edit_text"
         android:hint="@string/symptomsInput"
         android:inputType="textMultiLine"
@@ -72,8 +73,10 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
         android:text="@string/warning_message"
-        android:textColor="#DD2C00"
-        android:textSize="12sp"
-        tools:ignore="VisualLintLongText" /> <!-- Increased margin for more space -->
+        android:textColor="#E0E0E0"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        tools:ignore="VisualLintLongText" />
     android:layout_centerHorizontal="true" />
 </RelativeLayout>
