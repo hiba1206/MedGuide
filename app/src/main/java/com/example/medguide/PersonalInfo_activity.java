@@ -26,7 +26,7 @@ public class PersonalInfo_activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_personal_info);
 
         // Références des champs
         etNom = findViewById(R.id.et_nom);
