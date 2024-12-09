@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="et_nom" type="id">nom</item>
+    <item name="et_prenom" type="id">prenom</item>
+    <item name="et_email_phone" type="id">phone</item>
+    <item name="et_date_naissance" type="id">datenaissance</item>
+    <item name="et_taille" type="id">taille</item>
+    <item name="et_poids" type="id">poids</item>
+    <item name="et_password" type="id">password</item>
+    <item name="et_confirm_password" type="id">confirmpassword</item>
+    <item name="rg_sexe" type="id">sexe</item>
+    <item name="btn_next" type="id">bnt_nxt</item>
+    <item name="rg_handicape" type="id">handicape</item>
+    <item name="rg_diabetique" type="id">diabetique</item>
+    <item name="rg_allergies" type="id">alergie</item>
+    <item name="et_details_allergies" type="id">detailalergie</item>
+    <item name="groupesang" type="id">groupesan</item>
+    <item name="btn_soumettre" type="id">btnsoumettre</item>
+    <item name="rb_allergies_oui" type="id">alergieoui</item>
+    <item name="rb_handicape_oui" type="id">handicape_oui</item>
+    <item name="rb_diabetique_oui" type="id">diabetique_oui</item>
+</resources>
