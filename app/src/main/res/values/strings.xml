@@ -21,6 +21,9 @@
     <string name="partager">Partager</string>
     <string name="logout">Se déconnecter</string>
     <string name="home">Acceuil</string>
+    <string name="login_failed">connexion non réussite, veuillez reessayer</string>
+    <string name="invalid_username">Nom d\'utilisateur invalide</string>
+    <string name="invalid_password">Mot de passe invalide</string>
 
 
 </resources>
