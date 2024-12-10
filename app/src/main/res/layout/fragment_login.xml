@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:background="#ffffff">
+
+        <!-- Logo -->
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="120dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/logo_desc"
+            android:src="@drawable/medguide"
+            tools:ignore="ImageContrastCheck,ImageContrastCheck"
+            android:layout_centerHorizontal="true"/>
+
+        <!-- Username EditText -->
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="350dp"
+            android:layout_height="48dp"
+            android:layout_below="@id/logo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="39dp"
+            android:autofillHints="username"
+            android:background="@drawable/rounded_edit_text"
+            android:hint="@string/login_choices"
+            android:inputType="textEmailAddress"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:textColorHint="#757575"
+            android:textSize="14sp" />
+
+        <!-- Password EditText -->
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="350dp"
+            android:layout_height="48dp"
+            android:layout_below="@id/username"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:autofillHints="password"
+            android:background="@drawable/rounded_edit_text"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:textColorHint="#757575"
+            android:textSize="14sp" />
+
+        <!-- Login Button -->
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="350dp"
+            android:layout_height="48dp"
+            android:layout_below="@id/password"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/MedGuide_blue"
+            android:text="@string/login"
+            android:textColor="#ffff"
+            android:textSize="16sp"
+            tools:ignore="TextContrastCheck" />
+        <!-- Forgot Password Link -->
+        <TextView
+            android:id="@+id/forgot_password"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_below="@id/login_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/forgot_password"
+            android:textColor="#36C0CC"
+            android:textSize="12sp"
+            tools:ignore="TextContrastCheck" />
+
+        <!-- Sign Up Text -->
+        <TextView
+            android:id="@+id/signup_text"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_below="@id/forgot_password"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-10dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/signin"
+            android:textColor="#00838F"
+            android:textSize="14sp" />
+
+        <!-- Google Sign-In Button -->
+        <LinearLayout
+            android:id="@+id/google_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/signup_text"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/rounded_edit_text"
+            android:elevation="0dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@android:color/white"
+                android:src="@drawable/google"
+                android:scaleType="fitCenter"
+                android:elevation="0dp"
+                android:padding="4dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/continue_with_google"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:gravity="center" />
+        </LinearLayout>
+    </RelativeLayout>

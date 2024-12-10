@@ -11,4 +11,16 @@
     <string name="warning_message">Les informations fournies par MedGuide ne remplacent pas un avis médical. Consultez un professionnel de la santé pour un diagnostic précis.</string>
     <string name="symptomsInput">Décrivez vos symptômes ici</string>
     <string name="questionText">Quels sont vos symptômes ?</string>
+    <string name="open_nav">Open Navigation Drawer</string>
+    <string name="close_nav">Close Navigation Drawer</string>
+
+    <string name="medecins">Médecins</string>
+    <string name="medicaments">Médicaments</string>
+    <string name="pharmacies">Pharmacies</string>
+    <string name="garde">Pharmacies de Garde</string>
+    <string name="partager">Partager</string>
+    <string name="logout">Se déconnecter</string>
+    <string name="home">Acceuil</string>
+
+
 </resources>
