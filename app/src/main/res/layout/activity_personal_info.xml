@@ -1,0 +1,190 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/tv_titre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Informations personnelles"
+            android:textSize="20sp"
+            android:textColor="#36C0CC"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Nom -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            tools:ignore="ExtraText">
+            <EditText
+                android:id="@+id/et_nom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nom"
+                android:inputType="textPersonName"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/texte_principal"
+                android:textColorHint="@color/texte_secondaire"
+                android:padding="12dp"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Prénom -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
+            <EditText
+                android:id="@+id/et_prenom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Prénom"
+                android:inputType="textPersonName"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/texte_principal"
+                android:textColorHint="@color/texte_secondaire"
+                android:background="@color/white"
+                android:padding="12dp"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Email ou Numéro -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
+            <EditText
+                android:id="@+id/et_email_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email ou Numéro"
+                android:inputType="textEmailAddress|phone"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/texte_principal"
+                android:background="@color/white"
+                android:textColorHint="@color/texte_secondaire"
+                android:padding="12dp"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Date de naissance -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
+            <EditText
+                android:id="@+id/et_date_naissance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Date de naissance (JJ/MM/AAAA)"
+                android:focusable="false"
+                android:clickable="true"
+                android:backgroundTint="@color/white"
+                android:background="@color/white"
+                android:textColor="@color/texte_principal"
+                android:textColorHint="@color/texte_secondaire"
+                android:padding="12dp"/>
+        </androidx.cardview.widget.CardView>
+
+
+        <!-- Sexe -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/vert_clair_transparent"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
+            <RadioGroup
+                android:id="@+id/rg_sexe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white"
+
+                android:padding="12dp">
+                <RadioButton
+                    android:id="@+id/rb_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Homme"
+                    android:layout_marginEnd="24dp"
+                    android:textColor="@color/texte_principal"/> <!-- Texte noir -->
+                <RadioButton
+                    android:id="@+id/rb_female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Femme"
+                    android:textColor="@color/texte_principal"/> <!-- Texte noir -->
+            </RadioGroup>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Mot de passe -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
+            <EditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Mot de passe"
+                android:inputType="textPassword"
+                android:backgroundTint="@color/white"
+                android:background="@color/white"
+                android:textColor="@color/texte_principal"
+                android:textColorHint="@color/texte_secondaire"
+                android:padding="12dp"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Confirmation du mot de passe -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
+            <EditText
+                android:id="@+id/et_confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Confirmer le mot de passe"
+                android:inputType="textPassword"
+                android:backgroundTint="@color/white"
+                android:background="@color/white"
+                android:textColor="@color/texte_principal"
+                android:textColorHint="@color/texte_secondaire"
+                android:padding="12dp"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Bouton Suivant -->
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Suivant"
+            android:backgroundTint="#36C0CC"
+            app:cardCornerRadius="20dp"
+            android:textColor="@color/material_dynamic_neutral10"/>
+    </LinearLayout>
+</ScrollView>
