@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="toolbar" type="id"/>
+    <item name="fragment_container" type="id"/>
+    <item name="nav_view" type="id"/>
+    <item name="et_nom" type="id"/>
+    <item name="et_prenom" type="id"/>
+    <item name="et_email_phone" type="id"/>
+    <item name="et_date_naissance" type="id"/>
+    <item name="et_taille" type="id"/>
+    <item name="et_poids" type="id"/>
+    <item name="et_password" type="id"/>
+    <item name="et_confirm_password" type="id"/>
+    <item name="rg_sexe" type="id"/>
+    <item name="btn_next" type="id"/>
+    <item name="rg_handicape" type="id"/>
+    <item name="rg_diabetique" type="id"/>
+    <item name="rg_allergies" type="id"/>
+    <item name="et_details_allergies" type="id"/>
+    <item name="groupesang" type="id"/>
+    <item name="btn_soumettre" type="id"/>
+    <item name="rb_allergies_oui" type="id"/>
+    <item name="rb_handicape_oui" type="id"/>
+    <item name="rb_diabetique_oui" type="id"/>
+</resources>

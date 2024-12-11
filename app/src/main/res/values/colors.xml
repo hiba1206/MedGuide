@@ -6,4 +6,15 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <!-- Couleurs principales -->
+    <color name="vert_clair">#A8E6CF</color>
+    <color name="vert_clair_transparent">#80A8E6A1</color>
+    <color name="bleu_principal">#3F51B5</color>
+    <color name="rouge_erreur">#FF5722</color>
+    <color name="gris_fonce">#757575</color>
+
+    <!-- Couleurs de texte -->
+    <color name="texte_principal">#212121</color>
+    <color name="texte_secondaire">#757575</color>
+    <color name="texte_clair">#FFFFFF</color>
 </resources>
