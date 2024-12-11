@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <TextView
+            android:id="@+id/tv_titre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Découvrir votre santé"
+            android:textSize="20sp"
+            android:textColor="#36C0CC"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="16dp" />
+        <!-- Taille -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
+            <EditText
+                android:id="@+id/et_taille"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Taille (en cm)"
+                android:backgroundTint="@color/white"
+                android:background="@color/white"
+                android:textColor="@color/texte_principal"
+                android:textColorHint="@color/texte_secondaire"
+                android:padding="12dp"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Poids -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
+            <EditText
+                android:id="@+id/et_poids"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Poids (en kg)"
+                android:backgroundTint="@color/white"
+                android:background="@color/white"
+                android:textColor="@color/texte_principal"
+                android:textColorHint="@color/texte_secondaire"
+                android:padding="12dp"/>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
+            <!-- Question : Quel est votre groupe sanguin ? -->
+            <EditText
+                android:id="@+id/et_groupesang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Quel est votre groupe sanguin ?"
+                android:inputType="text"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/texte_principal"
+                android:textColorHint="@color/texte_secondaire"
+                android:padding="12dp" />
+
+
+        </androidx.cardview.widget.CardView>
+
+
+        <!-- Question : Êtes-vous handicapé ? -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="presentez-vous un handicap ?"
+            android:textSize="16sp" />
+
+        <RadioGroup
+            android:id="@+id/rg_handicape"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_handicape_oui"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Oui" />
+
+            <RadioButton
+                android:id="@+id/rb_handicape_non"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Non" />
+        </RadioGroup>
+
+        <!-- Question : Êtes-vous diabétique ? -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Êtes-vous diabétique ?"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp" />
+
+        <RadioGroup
+            android:id="@+id/rg_diabetique"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_diabetique_oui"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Oui" />
+
+            <RadioButton
+                android:id="@+id/rb_diabetique_non"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Non" />
+        </RadioGroup>
+
+        <!-- Question : Avez-vous des allergies ? -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Avez-vous des allergies ?"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp" />
+
+        <RadioGroup
+            android:id="@+id/rg_allergies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_allergies_oui"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Oui" />
+
+            <RadioButton
+                android:id="@+id/rb_allergies_non"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Non" />
+        </RadioGroup>
+
+        <!-- Champ pour préciser les allergies -->
+        <EditText
+            android:id="@+id/et_details_allergies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Veuillez préciser vos allergies"
+            android:inputType="text"
+            android:visibility="gone"
+            android:layout_marginTop="8dp" />
+
+        <!-- Bouton Soumettre -->
+        <Button
+            android:id="@+id/btn_soumettre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Soumettre"
+            android:background="#36C0CC"
+            app:cardCornerRadius="20dp"
+            android:layout_marginTop="16dp" />
+    </LinearLayout>
+</ScrollView>
+
