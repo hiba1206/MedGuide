@@ -24,6 +24,17 @@
     <string name="login_failed">connexion non réussite, veuillez reessayer</string>
     <string name="invalid_username">Nom d\'utilisateur invalide</string>
     <string name="invalid_password">Mot de passe invalide</string>
+    <string name="suivant">Suivant</string>
+    <string name="confirm">Confirmer le mot de passe</string>
+    <string name="birthday">Date de naissance (JJ/MM/AAAA)</string>
+    <string name="email">Email</string>
+    <string name="informations_personnelles">Informations personnelles</string>
+    <string name="homme">Homme</string>
+    <string name="femme">Femme</string>
+    <string name="username">Nom d\'utilisateur</string>
+    <string name="prenom">Prénom</string>
+    <string name="nom">Nom</string>
+    <string name="phonenumber">Numéro</string>
 
 
 </resources>

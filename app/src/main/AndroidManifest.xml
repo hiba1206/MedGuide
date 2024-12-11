@@ -29,6 +29,8 @@
         <activity android:name=".MainActivity"
             android:theme="@style/Theme.MedGuide.NoActionBar"
             android:exported="true" />
+        <activity android:name=".PersonalInfoActivity"/>
+        <activity android:name=".HealthyInfoActivity"/>
     </application>
 
 </manifest>

@@ -11,22 +11,45 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center">
+
         <TextView
             android:id="@+id/tv_titre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Informations personnelles"
-            android:textSize="20sp"
-            android:textColor="#36C0CC"
-            android:textStyle="bold"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="16dp"
             android:gravity="center"
-            android:layout_marginBottom="16dp" />
+            android:text="@string/informations_personnelles"
+            android:textColor="#0097A7"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
+            <EditText
+                android:id="@+id/et_username"
+                android:layout_width="match_parent"
+                android:autofillHints="username"
+                android:layout_height="wrap_content"
+                android:hint="@string/username"
+                android:inputType="textPersonName"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/texte_principal"
+                android:textColorHint="@color/texte_secondaire"
+                android:background="@color/white"
+                android:padding="12dp"/>
+        </androidx.cardview.widget.CardView>
 
         <!-- Nom -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="10dp"
+            android:importantForAutofill="no"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp"
             tools:ignore="ExtraText">
@@ -34,7 +57,8 @@
                 android:id="@+id/et_nom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nom"
+                android:hint="@string/nom"
+                android:importantForAutofill="no"
                 android:inputType="textPersonName"
                 android:background="@color/white"
                 android:backgroundTint="@color/white"
@@ -47,14 +71,15 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="10dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp">
             <EditText
                 android:id="@+id/et_prenom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Prénom"
+                android:hint="@string/prenom"
+                android:importantForAutofill="no"
                 android:inputType="textPersonName"
                 android:backgroundTint="@color/white"
                 android:textColor="@color/texte_principal"
@@ -63,18 +88,40 @@
                 android:padding="12dp"/>
         </androidx.cardview.widget.CardView>
 
-        <!-- Email ou Numéro -->
+        <!-- Email -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="10dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp">
             <EditText
-                android:id="@+id/et_email_phone"
+                android:id="@+id/et_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email ou Numéro"
+                android:focusable="true"
+                android:hint="@string/email"
+                android:autofillHints="emailAddress"
+                android:inputType="textEmailAddress|phone"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/texte_principal"
+                android:background="@color/white"
+                android:textColorHint="@color/texte_secondaire"
+                android:padding="12dp"/>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
+            <EditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/phonenumber"
+                android:autofillHints="phone"
                 android:inputType="textEmailAddress|phone"
                 android:backgroundTint="@color/white"
                 android:textColor="@color/texte_principal"
@@ -87,15 +134,17 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="10dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp">
             <EditText
                 android:id="@+id/et_date_naissance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Date de naissance (JJ/MM/AAAA)"
-                android:focusable="false"
+                android:hint="@string/birthday"
+                android:focusable="true"
+                android:importantForAutofill="no"
+                android:inputType="date"
                 android:clickable="true"
                 android:backgroundTint="@color/white"
                 android:background="@color/white"
@@ -105,51 +154,22 @@
         </androidx.cardview.widget.CardView>
 
 
-        <!-- Sexe -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:backgroundTint="@color/vert_clair_transparent"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp">
-            <RadioGroup
-                android:id="@+id/rg_sexe"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@color/white"
 
-                android:padding="12dp">
-                <RadioButton
-                    android:id="@+id/rb_male"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Homme"
-                    android:layout_marginEnd="24dp"
-                    android:textColor="@color/texte_principal"/> <!-- Texte noir -->
-                <RadioButton
-                    android:id="@+id/rb_female"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Femme"
-                    android:textColor="@color/texte_principal"/> <!-- Texte noir -->
-            </RadioGroup>
-        </androidx.cardview.widget.CardView>
 
         <!-- Mot de passe -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="10dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp">
             <EditText
                 android:id="@+id/et_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Mot de passe"
+                android:hint="@string/password"
                 android:inputType="textPassword"
+                android:autofillHints="password"
                 android:backgroundTint="@color/white"
                 android:background="@color/white"
                 android:textColor="@color/texte_principal"
@@ -161,14 +181,15 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="10dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp">
             <EditText
                 android:id="@+id/et_confirm_password"
+                android:autofillHints="password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Confirmer le mot de passe"
+                android:hint="@string/confirm"
                 android:inputType="textPassword"
                 android:backgroundTint="@color/white"
                 android:background="@color/white"
@@ -177,13 +198,49 @@
                 android:padding="12dp"/>
         </androidx.cardview.widget.CardView>
 
+        <!-- Sexe -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/vert_clair_transparent"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
+            <RadioGroup
+                android:id="@+id/rg_sexe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white"
+
+                android:padding="12dp">
+
+                <RadioButton
+                    android:id="@+id/rb_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:minHeight="48dp"
+                    android:text="@string/homme"
+                    android:textColor="@color/texte_principal" /> <!-- Texte noir -->
+                <RadioButton
+                    android:id="@+id/rb_female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:text="@string/femme"
+                    android:textColor="@color/texte_principal" /> <!-- Texte noir -->
+            </RadioGroup>
+        </androidx.cardview.widget.CardView>
+
         <!-- Bouton Suivant -->
         <Button
             android:id="@+id/btn_next"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:text="Suivant"
+            android:text="@string/suivant"
             android:backgroundTint="#36C0CC"
+            android:background="@drawable/rounded_edit_text"
             app:cardCornerRadius="20dp"
             android:textColor="@color/material_dynamic_neutral10"/>
     </LinearLayout>
