@@ -42,7 +42,7 @@ public class LoginFragment extends Fragment {
         // Google Sign-In Button
         googleBtn = view.findViewById(R.id.google_btn);
         googleBtn.setOnClickListener(v -> signIn());
-        textView= textView.findViewById(R.id.signup_text);
+        textView= view.findViewById(R.id.signup_text);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
