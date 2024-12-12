@@ -19,7 +19,7 @@ import java.util.Date;
 
 public class PersonalInfoActivity extends AppCompatActivity {
 
-    private EditText etNom, etPrenom, etEmailPhone, etDateNaissance, etTaille, etPoids, etPassword, etConfirmPassword;
+    private EditText etNom, etPrenom, etEmail, etDateNaissance, etTaille, etPoids, etPassword, etConfirmPassword,etUsername,etPhone;
     private RadioGroup rgSexe;
 
     @SuppressLint("MissingInflatedId")
@@ -29,9 +29,11 @@ public class PersonalInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_personal_info);
 
         // Références des champs
+        etUsername=findViewById(R.id.et_username);
         etNom = findViewById(R.id.et_nom);
         etPrenom = findViewById(R.id.et_prenom);
-        etEmailPhone = findViewById(R.id.et_email_phone);
+        etEmail = findViewById(R.id.et_email);
+        etPhone=findViewById(R.id.et_phone);
         etDateNaissance = findViewById(R.id.et_date_naissance);
         etTaille = findViewById(R.id.et_taille);
         etPoids = findViewById(R.id.et_poids);
@@ -72,8 +74,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     private boolean validateFields() {
-        if (etNom.getText().toString().isEmpty() || etPrenom.getText().toString().isEmpty() ||
-                etEmailPhone.getText().toString().isEmpty() || etDateNaissance.getText().toString().isEmpty() ||
+        if (etUsername.getText().toString().isEmpty() || etNom.getText().toString().isEmpty() || etPrenom.getText().toString().isEmpty() ||
+                etEmail.getText().toString().isEmpty() || etDateNaissance.getText().toString().isEmpty() ||etPhone.getText().toString().isEmpty() ||
                 etPassword.getText().toString().isEmpty() || etConfirmPassword.getText().toString().isEmpty() ||
                 rgSexe.getCheckedRadioButtonId() == -1) {
             Toast.makeText(this, "Tous les champs sont obligatoires !", Toast.LENGTH_LONG).show();

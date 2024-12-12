@@ -35,6 +35,17 @@
     <string name="prenom">Prénom</string>
     <string name="nom">Nom</string>
     <string name="phonenumber">Numéro</string>
+    <string name="handicap">presentez-vous un handicap ?</string>
+    <string name="diabetique">Êtes-vous diabétique ?</string>
+    <string name="allergies">Avez-vous des allergies ?</string>
+    <string name="soumettre">Soumettre</string>
+    <string name="allergiesdetails">Veuillez préciser vos allergies</string>
+    <string name="grpsanguin">Quel est votre groupe sanguin ?</string>
+    <string name="poids">Poids (en kg)</string>
+    <string name="taille">Taille (en cm)</string>
+    <string name="non">Non</string>
+    <string name="oui">Oui</string>
+    <string name="sante">Découvrir votre santé</string>
 
 
 </resources>

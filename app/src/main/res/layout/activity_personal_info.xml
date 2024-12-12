@@ -102,7 +102,7 @@
                 android:focusable="true"
                 android:hint="@string/email"
                 android:autofillHints="emailAddress"
-                android:inputType="textEmailAddress|phone"
+                android:inputType="textEmailAddress"
                 android:backgroundTint="@color/white"
                 android:textColor="@color/texte_principal"
                 android:background="@color/white"
@@ -202,7 +202,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="20dp"
             android:backgroundTint="@color/vert_clair_transparent"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp">
