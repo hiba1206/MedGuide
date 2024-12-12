@@ -46,6 +46,11 @@
     <string name="non">Non</string>
     <string name="oui">Oui</string>
     <string name="sante">Découvrir votre santé</string>
+    <string name="nom_aspirin">Nom: Aspirin</string>
+    <string name="prix_50_dh">Prix: 50 DH</string>
+    <string name="taux_de_remboursement_80">Taux de Remboursement: 80%</string>
+    <string name="forme_comprim">Forme: Comprimé</string>
+    <string name="pr_sentation_bo_te_de_30_comprim_s">Présentation: Boîte de 30 comprimés</string>
 
 
 </resources>

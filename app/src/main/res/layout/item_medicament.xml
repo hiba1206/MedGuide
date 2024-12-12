@@ -1,0 +1,62 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:layout_margin="8dp">
+
+    <!-- Product Name -->
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/nom_aspirin"
+        android:textColor="@color/MedGuide_blue"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:padding="8dp"
+        />
+
+    <!-- Price -->
+    <TextView
+        android:id="@+id/textViewPrix"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/prix_50_dh"
+        android:textSize="14sp"
+        android:padding="8dp"
+        android:background="@drawable/rounded_edit_text"/>
+
+    <!-- Reimbursement Rate -->
+    <TextView
+        android:id="@+id/textViewTaux"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/taux_de_remboursement_80"
+        android:textSize="14sp"
+        android:padding="8dp"
+        android:background="@drawable/rounded_edit_text"/>
+
+    <!-- Forme -->
+    <TextView
+        android:id="@+id/textViewForme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/forme_comprim"
+        android:textSize="14sp"
+        android:padding="8dp"
+        android:background="@drawable/rounded_edit_text"/>
+
+    <!-- Presentation -->
+    <TextView
+        android:id="@+id/textViewPresentation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pr_sentation_bo_te_de_30_comprim_s"
+        android:textSize="14sp"
+        android:padding="8dp"
+        android:background="@drawable/rounded_edit_text"/>
+
+</LinearLayout>
