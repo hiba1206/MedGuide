@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Déclaration des IDs sans valeurs spécifiques, juste les noms -->
+    <item name="toolbar" type="id"/>
+    <item name="fragment_container" type="id"/>
+    <item name="nav_view" type="id"/>
     <item name="et_nom" type="id"/>
     <item name="et_prenom" type="id"/>
     <item name="et_email_phone" type="id"/>

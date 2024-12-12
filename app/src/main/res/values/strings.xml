@@ -11,4 +11,41 @@
     <string name="warning_message">Les informations fournies par MedGuide ne remplacent pas un avis médical. Consultez un professionnel de la santé pour un diagnostic précis.</string>
     <string name="symptomsInput">Décrivez vos symptômes ici</string>
     <string name="questionText">Quels sont vos symptômes ?</string>
+    <string name="open_nav">Open Navigation Drawer</string>
+    <string name="close_nav">Close Navigation Drawer</string>
+
+    <string name="medecins">Médecins</string>
+    <string name="medicaments">Médicaments</string>
+    <string name="pharmacies">Pharmacies</string>
+    <string name="garde">Pharmacies de Garde</string>
+    <string name="partager">Partager</string>
+    <string name="logout">Se déconnecter</string>
+    <string name="home">Acceuil</string>
+    <string name="login_failed">connexion non réussite, veuillez reessayer</string>
+    <string name="invalid_username">Nom d\'utilisateur invalide</string>
+    <string name="invalid_password">Mot de passe invalide</string>
+    <string name="suivant">Suivant</string>
+    <string name="confirm">Confirmer le mot de passe</string>
+    <string name="birthday">Date de naissance (JJ/MM/AAAA)</string>
+    <string name="email">Email</string>
+    <string name="informations_personnelles">Informations personnelles</string>
+    <string name="homme">Homme</string>
+    <string name="femme">Femme</string>
+    <string name="username">Nom d\'utilisateur</string>
+    <string name="prenom">Prénom</string>
+    <string name="nom">Nom</string>
+    <string name="phonenumber">Numéro</string>
+    <string name="handicap">presentez-vous un handicap ?</string>
+    <string name="diabetique">Êtes-vous diabétique ?</string>
+    <string name="allergies">Avez-vous des allergies ?</string>
+    <string name="soumettre">Soumettre</string>
+    <string name="allergiesdetails">Veuillez préciser vos allergies</string>
+    <string name="grpsanguin">Quel est votre groupe sanguin ?</string>
+    <string name="poids">Poids (en kg)</string>
+    <string name="taille">Taille (en cm)</string>
+    <string name="non">Non</string>
+    <string name="oui">Oui</string>
+    <string name="sante">Découvrir votre santé</string>
+
+
 </resources>

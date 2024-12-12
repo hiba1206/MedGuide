@@ -1,9 +1,18 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.MedGuide" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Theme.MedGuide" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Other theme attributes -->
     </style>
 
-    <style name="Theme.MedGuide" parent="Base.Theme.MedGuide" />
+    <style name="Theme.MedGuide.NoActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/MedGuide_blue</item>
+        <item name="colorPrimaryDark">@color/MedGuide_blue_variant</item>
+        <item name="colorAccent">@color/teal_700</item>
+    </style>
+
+
+
+
 </resources>
