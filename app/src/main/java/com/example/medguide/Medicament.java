@@ -16,12 +16,6 @@ public class Medicament {
         this.tauxRemboursement = tauxRemboursement;
     }
 
-    public Medicament(String name,String prix, String tauxRemboursement) {
-        this.name = name;
-        this.prix = prix;
-        this.tauxRemboursement = tauxRemboursement;
-    }
-
     // Getters
     public String getName() {
         return name;
