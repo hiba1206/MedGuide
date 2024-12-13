@@ -102,6 +102,18 @@ public class databaseHelper extends SQLiteOpenHelper {
                 }
                 cursor.close();
             }
+            // doctors
+            // Log column names from the doctors table
+
+            Cursor cursor1 = db.rawQuery("PRAGMA table_info(doctors);", null);
+
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    String columnName = cursor.getString(cursor.getColumnIndex("name"));
+                    Log.d("Database", "Column name: " + columnName);
+                }
+                cursor.close();
+            }
 
             // Verify if the database was copied successfully
             if (!databaseFile.exists()) {
@@ -143,6 +155,17 @@ public class databaseHelper extends SQLiteOpenHelper {
         // Execute the query and return the cursor
         return db.rawQuery(queryDisplayMedicaments, null);
     }
+    // Fetch data for displaying Doctors
+    public Cursor getDoctorsForDisplay() {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Query to select all rows from the medicaments table
+        String queryDisplayDoctors = "SELECT * FROM doctors";
+        Log.d("Database", "Query: " + queryDisplayDoctors);
+
+        // Execute the query and return the cursor
+        return db.rawQuery(queryDisplayDoctors, null);
+    }
 
 
     // Search Medicaments by keyword
@@ -157,6 +180,20 @@ public class databaseHelper extends SQLiteOpenHelper {
         String wildcardKeyword = "%" + keyword + "%";
         return db.rawQuery(querySearchMedicaments, new String[]{
                 wildcardKeyword, wildcardKeyword, wildcardKeyword, wildcardKeyword, wildcardKeyword
+        });
+    }
+    // Search Doctors by keyword
+    public Cursor searchDoctorsByName(String keyword) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String querySearchDoctors= "SELECT * FROM doctors WHERE " +
+                "NOM LIKE ? OR " +
+                "ADRESSE LIKE ? OR " +
+                "NUMERO LIKE ? OR " +
+              //  "specialiteLIKE ? OR " +
+                "SPECIALITE LIKE ?";
+        String wildcardKeyword = "%" + keyword + "%";
+        return db.rawQuery(querySearchDoctors, new String[]{
+                wildcardKeyword, wildcardKeyword, wildcardKeyword, wildcardKeyword
         });
     }
 }

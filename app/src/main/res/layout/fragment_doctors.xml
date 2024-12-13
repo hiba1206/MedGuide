@@ -3,15 +3,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".doctorsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- Title for the doctors Section -->
     <TextView
+        android:id="@+id/doctorsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Doctors Fragment"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"
-        android:textColor="@color/black"/>
+        android:text="@string/doctors"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#0097A7"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="12dp" />
 
+    <!-- Search Bar -->
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView_doctors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Rechercher des docteurs"
+        android:iconifiedByDefault="false"
+        android:layout_below="@id/doctorsTitle"
+        android:layout_marginBottom="0dp"
+        android:background="?android:attr/selectableItemBackground" />
+
+    <!-- RecyclerView for displaying the Medicaments data -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_doctors"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/searchView_doctors"
+        android:layout_marginTop="0dp"
+        android:divider="?android:attr/dividerHorizontal"
+        android:dividerHeight="0.5dp"
+        android:layout_marginBottom="5dp" />
 </RelativeLayout>

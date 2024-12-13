@@ -51,6 +51,12 @@
     <string name="taux_de_remboursement_80">Taux de Remboursement: 80%</string>
     <string name="forme_comprim">Forme: Comprimé</string>
     <string name="pr_sentation_bo_te_de_30_comprim_s">Présentation: Boîte de 30 comprimés</string>
+    <string name="doctors" />
+    <string name="nom_docteur" />
+    <string name="adresse_oujda" />
+    <string name="numero_de_telephone" />
+    <string name="specialite" />
+    <string name="horaire" />
 
 
 </resources>
