@@ -107,12 +107,12 @@ public class databaseHelper extends SQLiteOpenHelper {
 
             Cursor cursor1 = db.rawQuery("PRAGMA table_info(doctors);", null);
 
-            if (cursor != null) {
-                while (cursor.moveToNext()) {
-                    String columnName = cursor.getString(cursor.getColumnIndex("name"));
+            if (cursor1 != null) {
+                while (cursor1.moveToNext()) {
+                    String columnName = cursor1.getString(cursor1.getColumnIndex("name"));
                     Log.d("Database", "Column name: " + columnName);
                 }
-                cursor.close();
+                cursor1.close();
             }
 
             // Verify if the database was copied successfully
@@ -186,11 +186,10 @@ public class databaseHelper extends SQLiteOpenHelper {
     public Cursor searchDoctorsByName(String keyword) {
         SQLiteDatabase db = this.getReadableDatabase();
         String querySearchDoctors= "SELECT * FROM doctors WHERE " +
-                "NOM LIKE ? OR " +
-                "ADRESSE LIKE ? OR " +
-                "NUMERO LIKE ? OR " +
-              //  "specialiteLIKE ? OR " +
-                "SPECIALITE LIKE ?";
+                "doctor_name LIKE ? OR " +
+                "adresse LIKE ? OR " +
+                "phoneNumber LIKE ? OR " +
+                "specialite LIKE ?";
         String wildcardKeyword = "%" + keyword + "%";
         return db.rawQuery(querySearchDoctors, new String[]{
                 wildcardKeyword, wildcardKeyword, wildcardKeyword, wildcardKeyword

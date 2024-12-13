@@ -5,7 +5,6 @@ public class Doctors {
      private String adresse;
      private String numero;
      private String specialite;
-    //private String tauxRemboursement;
 
     // Constructor
     public Doctors(String name, String adresse, String  numero, String specialite) {
@@ -13,7 +12,6 @@ public class Doctors {
         this.adresse = adresse;
         this.numero= numero;
         this.specialite = specialite;
-        //this.tauxRemboursement = tauxRemboursement;
     }
 
 
@@ -22,7 +20,7 @@ public class Doctors {
         return name;
     }
 
-    public static String getAdresse() {
+    public String getAdresse() {
         return adresse;
     }
 
@@ -33,10 +31,6 @@ public class Doctors {
     public String getSpecialite() {
         return specialite;
     }
-
-    //public String getTauxRemboursement() {
-    //  return tauxRemboursement;
-    // }
 
     // Setters (if needed)
     public void setName(String name) {
@@ -55,15 +49,10 @@ public class Doctors {
         this.specialite= specialite;
     }
 
-    /// public void setTauxRemboursement(String tauxRemboursement) {
-    //   this.tauxRemboursement = tauxRemboursement;
-    //  }
-
     public boolean matchesSearch(String query) {
         String queryLower = query.toLowerCase().trim();
         return name.toLowerCase().contains(queryLower) ||
                 adresse.toLowerCase().contains(queryLower) ||
-                // tauxRemboursement.toLowerCase().contains(queryLower) ||
                 (numero != null && numero.toLowerCase().contains(queryLower)) ||
                 (specialite != null && specialite.toLowerCase().contains(queryLower));
     }

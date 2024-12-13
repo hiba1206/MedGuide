@@ -20,7 +20,7 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHold
     private List<Doctors> doctors;
     private List<Doctors> doctorsFull; // Full list for searching
 
-    public DoctorsAdapter(List<Medicament> medicaments) {
+    public DoctorsAdapter(List<Doctors> doctors) {
             this.doctors = doctors;
             doctorsFull = new ArrayList<>(doctors);
         }
@@ -36,10 +36,9 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHold
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             Doctors doctors1 = doctors.get(position);
             holder.nameTextView.setText(doctors1.getName());
-            holder.AdresseTextView.setText("Adresse: " +doctors1.getAdresse());
-           // holdeTextView.setText("Taux de Remboursement: " +doctors.getTauxRemboursement());
-            holder.NumeroTextView.setText("numero: " + doctors1.getNumero());  // Add Forme
-            holder.SpecialiteTextView.setText("specialite: " + doctors1.getSpecialite());  // Add Presentation
+            holder.adresseTextView.setText("Adresse: " +doctors1.getAdresse());
+            holder.numeroTextView.setText("Numero: 0" + doctors1.getNumero());  // Add Forme
+            holder.specialiteTextView.setText("Spécialité: " + doctors1.getSpecialite());  // Add Presentation
         }
 
 
@@ -91,9 +90,6 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHold
     }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
-            public BreakIterator SpecialiteTextView;
-            public BreakIterator AdresseTextView;
-            public BreakIterator NumeroTextView;
             TextView nameTextView, adresseTextView, numeroTextView,specialiteTextView;
 
             public ViewHolder(@NonNull View itemView) {
@@ -102,7 +98,6 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHold
                 adresseTextView = itemView.findViewById(R.id.textViewAdresse);
                 numeroTextView = itemView.findViewById(R.id.textViewNumero);
                 specialiteTextView=itemView.findViewById(R.id.textViewSpecialite);
-                //presentationTextView=itemView.findViewById(R.id.textViewPresentation);
 
             }
         }
