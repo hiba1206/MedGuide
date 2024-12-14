@@ -4,10 +4,12 @@ import sqlite3
 # File paths
 medicaments_file_path = 'medicaments.xlsx'
 doctors_file_path = 'doctors.xlsx'
+pharmacies_file_path='pharmacies.xlsx'
 
 # Read data from Excel files
 medicaments_data = pd.read_excel(medicaments_file_path, sheet_name='med', engine='openpyxl')
 doctors_data = pd.read_excel(doctors_file_path, engine='openpyxl')
+pharmacies_data=pd.read_excel(pharmacies_file_path,engine='openpyxl')
 
 # Database path (make sure it's the correct path for your project)
 db_path = '../app/src/main/assets/med_guide.db'
@@ -36,6 +38,18 @@ print(f"Data has been successfully imported into the '{doctors_table_name}' tabl
 
 # Print sample data from 'doctors' table
 cursor.execute(f"SELECT * FROM {doctors_table_name} LIMIT 5;")
+print("Sample data from doctors table:")
+for row in cursor.fetchall():
+    print(row)
+
+# Create 'pharmacies' table and insert data
+pharmacies_table_name = 'pharmacies'
+pharmacies_data.to_sql(pharmacies_table_name, conn, if_exists='replace', index=False)
+
+print(f"Data has been successfully imported into the '{pharmacies_table_name}' table in '{db_path}'.")
+
+# Print sample data from 'doctors' table
+cursor.execute(f"SELECT * FROM {pharmacies_table_name} LIMIT 5;")
 print("Sample data from doctors table:")
 for row in cursor.fetchall():
     print(row)
