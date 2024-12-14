@@ -141,5 +141,4 @@ public class HealthyInfoActivity extends AppCompatActivity {
                 .addOnFailureListener(e ->
                         Toast.makeText(HealthyInfoActivity.this, "Erreur d'enregistrement : " + e.getMessage(), Toast.LENGTH_LONG).show());
     }
-
 }

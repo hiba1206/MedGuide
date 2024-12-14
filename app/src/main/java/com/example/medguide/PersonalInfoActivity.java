@@ -12,9 +12,15 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.example.medguide.models.User;
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.medguide.models.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
@@ -28,7 +34,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_info);
-
 
         // References to views
         etUsername = findViewById(R.id.et_username);
@@ -49,21 +54,12 @@ public class PersonalInfoActivity extends AppCompatActivity {
         // Next button click
         btnNext.setOnClickListener(v -> {
             if (validateFields()) {
-                User user = new User(
-                        etUsername.getText().toString().trim(),
-                        etNom.getText().toString().trim(),
-                        etPrenom.getText().toString().trim(),
-                        etEmail.getText().toString().trim(),
-                        etPhone.getText().toString().trim(),
-                        etDateNaissance.getText().toString().trim(),
-                        (rgSexe.getCheckedRadioButtonId() == R.id.rb_male ? "Homme" : "Femme"),
-                        etPassword.getText().toString()
-                );
+                String email = etEmail.getText().toString().trim();
+                String username = etUsername.getText().toString().trim();
+                String phone = etPhone.getText().toString().trim();
 
-                Intent intent = new Intent(PersonalInfoActivity.this, HealthyInfoActivity.class);
-                intent.putExtra("user", user);
-                startActivity(intent);
-                finish();
+                // Check for uniqueness of email, username, and phone
+                checkForExistingUser(email, username, phone);
             }
         });
     }
@@ -114,5 +110,70 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     private boolean isValidEmail(String email) {
         return email != null && Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    private void checkForExistingUser(String email, String username, String phone) {
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
+
+        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                boolean isEmailTaken = false;
+                boolean isUsernameTaken = false;
+                boolean isPhoneTaken = false;
+
+                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                    String dbEmail = userSnapshot.child("email").getValue(String.class);
+                    String dbUsername = userSnapshot.child("username").getValue(String.class);
+                    String dbPhone = userSnapshot.child("phone").getValue(String.class);
+
+                    if (email.equals(dbEmail)) {
+                        isEmailTaken = true;
+                    }
+                    if (username.equals(dbUsername)) {
+                        isUsernameTaken = true;
+                    }
+                    if (phone.equals(dbPhone)) {
+                        isPhoneTaken = true;
+                    }
+                }
+
+                if (isEmailTaken) {
+                    Toast.makeText(PersonalInfoActivity.this, "L'email est déjà utilisé!", Toast.LENGTH_SHORT).show();
+                } else if (isUsernameTaken) {
+                    Toast.makeText(PersonalInfoActivity.this, "Le nom d'utilisateur est déjà pris!", Toast.LENGTH_SHORT).show();
+                } else if (isPhoneTaken) {
+                    Toast.makeText(PersonalInfoActivity.this, "Le numéro de téléphone est déjà utilisé!", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Proceed with the registration since no duplicates were found
+                    proceedWithRegistration(email, username, phone);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(PersonalInfoActivity.this, "Erreur de vérification: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void proceedWithRegistration(String email, String username, String phone) {
+        // Create a new User object
+        User user = new User(
+                etUsername.getText().toString().trim(),
+                etNom.getText().toString().trim(),
+                etPrenom.getText().toString().trim(),
+                etEmail.getText().toString().trim(),
+                etPhone.getText().toString().trim(),
+                etDateNaissance.getText().toString().trim(),
+                (rgSexe.getCheckedRadioButtonId() == R.id.rb_male ? "Homme" : "Femme"),
+                etPassword.getText().toString()
+        );
+
+        // Pass the user object to the next activity
+        Intent intent = new Intent(PersonalInfoActivity.this, HealthyInfoActivity.class);
+        intent.putExtra("user", user);
+        startActivity(intent);
+        finish();
     }
 }
