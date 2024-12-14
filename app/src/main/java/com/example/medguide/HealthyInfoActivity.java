@@ -43,7 +43,7 @@ public class HealthyInfoActivity extends AppCompatActivity {
         rgDiabetique = findViewById(R.id.rg_diabetique);
         rgAllergies = findViewById(R.id.rg_allergies);
         etDetailsAllergies = findViewById(R.id.et_details_allergies);
-        etGroupeSanguin = findViewById(R.id.groupesang);
+        etGroupeSanguin = findViewById(R.id.et_groupesang);
         Button btnSoumettre = findViewById(R.id.btn_soumettre);
 
         // Handle visibility of allergy details input
