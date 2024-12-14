@@ -23,7 +23,7 @@ public class Pharmacie {
     }
 
     public String getAdresse() {
-        return numero;
+        return adresse;
     }
 
     public String getNumero() {
@@ -58,7 +58,6 @@ public class Pharmacie {
         String queryLower = query.toLowerCase().trim();
         return name.toLowerCase().contains(queryLower) ||
                 adresse.toLowerCase().contains(queryLower) ||
-                //tauxRemboursement.toLowerCase().contains(queryLower) ||
                 (numero != null && numero.toLowerCase().contains(queryLower)) ||
                 (horaire != null && horaire.toLowerCase().contains(queryLower));
     }

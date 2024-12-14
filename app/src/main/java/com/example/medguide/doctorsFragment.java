@@ -128,7 +128,6 @@ private void searchDoctors(String name) {
                     cursor.getString(adresseIndex),
                     cursor.getString(numeroIndex),
                     cursor.getString(specialiteIndex)
-
             ));
         }
         cursor.close();

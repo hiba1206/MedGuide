@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -117,14 +116,14 @@ public class databaseHelper extends SQLiteOpenHelper {
             //pharmacie
             // Log column names from the pharmacies table
 
-            Cursor cursor2 = db.rawQuery("PRAGMA table_info(pharmacie);", null);
+            Cursor cursor2 = db.rawQuery("PRAGMA table_info(pharmacies);", null);
 
-            if (cursor1 != null) {
-                while (cursor1.moveToNext()) {
-                    String columnName = cursor1.getString(cursor2.getColumnIndex("name"));
+            if (cursor2 != null) {
+                while (cursor2.moveToNext()) {
+                    String columnName = cursor2.getString(cursor2.getColumnIndex("name"));
                     Log.d("Database", "Column name: " + columnName);
                 }
-                cursor1.close();
+                cursor2.close();
             }
 
 
@@ -184,7 +183,7 @@ public class databaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Query to select all rows from the pharmacies table
-        String queryDisplayPharmacie = "SELECT * FROM pharmacie";
+        String queryDisplayPharmacie = "SELECT * FROM pharmacies";
         Log.d("Database", "Query: " + queryDisplayPharmacie);
 
         // Execute the query and return the cursor
@@ -222,7 +221,7 @@ public class databaseHelper extends SQLiteOpenHelper {
     // Search pharmacies by keyword
     public Cursor searchPharmacieByName(String keyword) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String querySearchPharmacie= "SELECT * FROM pharmacie WHERE " +
+        String querySearchPharmacie= "SELECT * FROM pharmacies WHERE " +
                 "nom LIKE ? OR " +
                 "adresse LIKE ? OR " +
                 "numero LIKE ? OR " +

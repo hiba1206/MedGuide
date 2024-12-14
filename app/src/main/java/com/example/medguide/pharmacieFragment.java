@@ -61,7 +61,7 @@ public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup c
 
 private void loadPharmacie() {
     Cursor cursor = null;
-    Cursor testCursor = DatabaseHelper.getReadableDatabase().rawQuery("SELECT * FROM pharmacie LIMIT 1", null);
+    Cursor testCursor = DatabaseHelper.getReadableDatabase().rawQuery("SELECT * FROM pharmacies LIMIT 1", null);
     if (testCursor != null && testCursor.moveToFirst()) {
         String nom= testCursor.getString(testCursor.getColumnIndex("nom"));
         Log.d("Database", "First pharmacie: " +nom);
@@ -79,9 +79,9 @@ private void loadPharmacie() {
 
         List<Pharmacie>pharmacie = new ArrayList<>();
         if (cursor != null) {
-            int nomIndex = cursor.getColumnIndex("doctor_name");
+            int nomIndex = cursor.getColumnIndex("nom");
             int adresseIndex = cursor.getColumnIndex("adresse");
-            int numeroIndex = cursor.getColumnIndex("phoneNumber");
+            int numeroIndex = cursor.getColumnIndex("numero");
             int horaireIndex = cursor.getColumnIndex("horaire");
 
             if (nomIndex == -1 || adresseIndex == -1 || numeroIndex == -1 || horaireIndex == -1 ) {
@@ -109,7 +109,7 @@ private void loadPharmacie() {
 }
 
 private void searchPharmacie(String name) {
-    Cursor cursor = DatabaseHelper.searchDoctorsByName(name);
+    Cursor cursor = DatabaseHelper.searchPharmacieByName(name);
     List<Pharmacie> pharmacie = new ArrayList<>();
     if (cursor != null) {
         int nomIndex = cursor.getColumnIndex("nom");
