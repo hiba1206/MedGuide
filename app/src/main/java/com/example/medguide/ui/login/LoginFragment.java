@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.medguide.ForgotPasswordActivity;
 import com.example.medguide.PersonalInfoActivity;
 import com.example.medguide.R;
 import com.example.medguide.SecondActivity;
@@ -26,7 +27,7 @@ public class LoginFragment extends Fragment {
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     LinearLayout googleBtn;
-    TextView textView;
+    TextView textView,forgotPasswordText;
 
     @Nullable
     @Override
@@ -43,12 +44,22 @@ public class LoginFragment extends Fragment {
         googleBtn = view.findViewById(R.id.google_btn);
         googleBtn.setOnClickListener(v -> signIn());
         textView= view.findViewById(R.id.signup_text);
+        forgotPasswordText = view.findViewById(R.id.forgot_password);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getActivity(), PersonalInfoActivity.class);
                 startActivity(intent);
             }
+            });
+        forgotPasswordText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start the ForgotPasswordActivity
+                Intent intent = new Intent(getActivity(),ForgotPasswordActivity.class);
+                startActivity(intent);
+            }
+
         });
 
         return view;
