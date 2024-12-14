@@ -46,6 +46,8 @@
     <string name="non">Non</string>
     <string name="oui">Oui</string>
     <string name="sante">Découvrir votre santé</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

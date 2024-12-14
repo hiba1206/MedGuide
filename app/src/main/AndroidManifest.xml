@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -17,9 +18,6 @@
         <activity
             android:name=".HealthyInfoActivity"
             android:exported="false" />
-        <activity
-            android:name=".PersonalInfo_activity"
-            android:exported="true" />
         <activity
             android:name=".SecondActivity"
             android:exported="false" />
@@ -36,6 +34,9 @@
             android:theme="@style/Theme.MedGuide.NoActionBar"
             android:exported="true" />
         <activity android:name=".PersonalInfoActivity"/>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="default_channel" />
     </application>
 
 </manifest>
