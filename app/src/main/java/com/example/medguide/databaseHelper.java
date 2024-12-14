@@ -114,6 +114,19 @@ public class databaseHelper extends SQLiteOpenHelper {
                 }
                 cursor1.close();
             }
+            //pharmacie
+            // Log column names from the pharmacies table
+
+            Cursor cursor2 = db.rawQuery("PRAGMA table_info(pharmacie);", null);
+
+            if (cursor1 != null) {
+                while (cursor1.moveToNext()) {
+                    String columnName = cursor1.getString(cursor2.getColumnIndex("name"));
+                    Log.d("Database", "Column name: " + columnName);
+                }
+                cursor1.close();
+            }
+
 
             // Verify if the database was copied successfully
             if (!databaseFile.exists()) {
@@ -166,6 +179,17 @@ public class databaseHelper extends SQLiteOpenHelper {
         // Execute the query and return the cursor
         return db.rawQuery(queryDisplayDoctors, null);
     }
+    // Fetch data for displaying pharmacie
+    public Cursor getPharmacieForDisplay() {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Query to select all rows from the pharmacies table
+        String queryDisplayPharmacie = "SELECT * FROM pharmacie";
+        Log.d("Database", "Query: " + queryDisplayPharmacie);
+
+        // Execute the query and return the cursor
+        return db.rawQuery(queryDisplayPharmacie, null);
+    }
 
 
     // Search Medicaments by keyword
@@ -192,6 +216,20 @@ public class databaseHelper extends SQLiteOpenHelper {
                 "specialite LIKE ?";
         String wildcardKeyword = "%" + keyword + "%";
         return db.rawQuery(querySearchDoctors, new String[]{
+                wildcardKeyword, wildcardKeyword, wildcardKeyword, wildcardKeyword
+        });
+    }
+    // Search pharmacies by keyword
+    public Cursor searchPharmacieByName(String keyword) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String querySearchPharmacie= "SELECT * FROM pharmacie WHERE " +
+                "nom LIKE ? OR " +
+                "adresse LIKE ? OR " +
+                "numero LIKE ? OR " +
+                "horaire LIKE ?";
+        String wildcardKeyword = "%" + keyword + "%";
+
+        return db.rawQuery(querySearchPharmacie, new String[]{
                 wildcardKeyword, wildcardKeyword, wildcardKeyword, wildcardKeyword
         });
     }

@@ -57,6 +57,9 @@
     <string name="numero_de_telephone" />
     <string name="specialite" />
     <string name="horaire" />
+    <string name="nom_oujda" />
+    <string name="numero_oujda" />
+    <string name="oujda_24h" />
 
 
 </resources>
