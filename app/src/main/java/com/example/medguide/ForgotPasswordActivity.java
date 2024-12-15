@@ -3,7 +3,6 @@ package com.example.medguide;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -12,8 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ForgotPasswordActivity extends AppCompatActivity{
     private EditText emailEditText;
-    private Button submitButton;
-    private TextView loginHereText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,34 +19,28 @@ public class ForgotPasswordActivity extends AppCompatActivity{
 
         // Initialize views
         emailEditText = findViewById(R.id.emailEditText);
-        submitButton = findViewById(R.id.submitButton);
-        loginHereText = findViewById(R.id.loginHereText);
+        Button submitButton = findViewById(R.id.submitButton);
+        TextView loginHereText = findViewById(R.id.loginHereText);
 
         // Set up the "Réinitialiser le mot de passe" button click listener
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = emailEditText.getText().toString().trim();
+        submitButton.setOnClickListener(v -> {
+            String email = emailEditText.getText().toString().trim();
 
-                // Check if the email field is empty
-                if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(ForgotPasswordActivity.this, "Veuillez entrer votre adresse email", Toast.LENGTH_SHORT).show();
-                } else {
-                    // Handle password reset (e.g., send reset email)
-                    handlePasswordReset(email);
-                }
+            // Check if the email field is empty
+            if (TextUtils.isEmpty(email)) {
+                Toast.makeText(ForgotPasswordActivity.this, "Veuillez entrer votre adresse email", Toast.LENGTH_SHORT).show();
+            } else {
+                // Handle password reset (e.g., send reset email)
+                handlePasswordReset(email);
             }
         });
 
         // Set up the "Se connecter ici" text click listener
-        loginHereText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Redirect to LoginActivity
-                Intent intent = new Intent(ForgotPasswordActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        loginHereText.setOnClickListener(v -> {
+            // Redirect to LoginActivity
+            Intent intent = new Intent(ForgotPasswordActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 

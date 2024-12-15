@@ -23,11 +23,9 @@
             android:name=".HealthyInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".PersonalInfo_activity"
-            android:exported="true" />
-        <activity
             android:name=".SecondActivity"
-            android:exported="false" />
+            android:theme="@style/Theme.MedGuide.NoActionBar"
+            android:exported="true"/>
         <activity
             android:name=".SplashActivity"
             android:exported="true">
@@ -41,6 +39,8 @@
             android:theme="@style/Theme.MedGuide.NoActionBar"
             android:exported="true" />
         <activity android:name=".PersonalInfoActivity"/>
+        <activity android:name=".ForgotPasswordActivity"/>
+
     </application>
 
 </manifest>

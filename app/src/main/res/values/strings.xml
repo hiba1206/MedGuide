@@ -60,7 +60,14 @@
     <string name="nom_oujda" />
     <string name="numero_oujda" />
     <string name="oujda_24h" />
-
+    <string name="reinitialize_password">Réinitialiser le mot de passe</string>
+    <string name="remember_password">Se souvenir de votre mot de passe</string>
+    <string name="login_here">Se connecter ici</string>
+    <string name="password_reinitialization_form">Formulaire de réinitialisation du mot de passe</string>
+    <string name="reinitialize_password_with_email">Entrez votre adresse email</string>
+    <string name="historique">Historique</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

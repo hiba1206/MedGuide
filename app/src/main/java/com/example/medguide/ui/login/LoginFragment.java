@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.medguide.ForgotPasswordActivity;
 import com.example.medguide.PersonalInfoActivity;
 import com.example.medguide.R;
 import com.example.medguide.SecondActivity;
@@ -35,7 +36,7 @@ public class LoginFragment extends Fragment {
 
     GoogleSignInClient gsc;
     LinearLayout googleBtn;
-    TextView textView;
+    TextView textView, mdpOublie;
     EditText etCredential, etPassword;
     Button btnLogin;
 
@@ -55,6 +56,7 @@ public class LoginFragment extends Fragment {
         etCredential = view.findViewById(R.id.username);
         etPassword = view.findViewById(R.id.password);
         btnLogin = view.findViewById(R.id.login_button);
+        mdpOublie = view.findViewById(R.id.forgot_password);
 
         // Google Sign-In Options
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -71,6 +73,12 @@ public class LoginFragment extends Fragment {
             startActivity(intent);
         });
 
+
+        // Forgot password clickable textView
+        mdpOublie.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), ForgotPasswordActivity.class);
+            startActivity(intent);
+        });
         // Manual Login Button
         btnLogin.setOnClickListener(v -> {
             String credential = etCredential.getText().toString().trim();
