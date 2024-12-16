@@ -54,5 +54,6 @@ dependencies {
     implementation(libs.firebase.database)
     implementation(libs.firebase.auth)
     implementation (libs.firebase.core)
+
 }
 

@@ -12,7 +12,8 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="47dp"
-        android:src="@drawable/profilelogo" />
+        android:src="@drawable/profilelogo"
+        />
 
     <TextView
         android:layout_width="wrap_content"
