@@ -2,6 +2,7 @@ package com.example.medguide;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,17 @@ public class SecondActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.main_second);
         navigationView = findViewById(R.id.nav_view_logged_in);
 
+        // Récupérer l'en-tête de la NavigationView
+        View headerView = navigationView.getHeaderView(0);
+
+        // Trouver le TextView dans l'en-tête
+        TextView tvUsername = headerView.findViewById(R.id.tv_username);
+
+        // Mettre à jour le texte avec le username récupéré
+        if (username != null) {
+            tvUsername.setText(username);
+        }
+
         // Set up ActionBarDrawerToggle
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav);
         drawerLayout.addDrawerListener(toggle);
@@ -65,8 +77,8 @@ public class SecondActivity extends AppCompatActivity {
 
                 // Créer un Bundle pour passer le username au fragment
                 Bundle bundle = new Bundle();
-                bundle.putString("username", username); // Ajouter le username au Bundle
-                profilFragment.setArguments(bundle); // Passer le Bundle au fragment
+                bundle.putString("username", username);
+                profilFragment.setArguments(bundle);
 
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container_logged_in, profilFragment)
@@ -120,8 +132,8 @@ public class SecondActivity extends AppCompatActivity {
         profilFragment.setArguments(bundle);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container_logged_in, profilFragment) // ID du conteneur de fragments
-                .addToBackStack(null) // Ajouter la transaction à la pile arrière pour permettre le retour
+                .replace(R.id.fragment_container_logged_in, profilFragment)
+                .addToBackStack(null)
                 .commit();
     }
 
