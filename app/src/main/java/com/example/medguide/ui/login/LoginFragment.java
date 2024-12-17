@@ -73,12 +73,12 @@ public class LoginFragment extends Fragment {
             startActivity(intent);
         });
 
-
         // Forgot password clickable textView
         mdpOublie.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), ForgotPasswordActivity.class);
             startActivity(intent);
         });
+
         // Manual Login Button
         btnLogin.setOnClickListener(v -> {
             String credential = etCredential.getText().toString().trim();
@@ -106,16 +106,19 @@ public class LoginFragment extends Fragment {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 task.getResult(ApiException.class);
-                navigateToSecondActivity();
+                navigateToSecondActivity(null); // Pas d'username pour Google Login
             } catch (ApiException e) {
                 Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private void navigateToSecondActivity() {
+    private void navigateToSecondActivity(String username) {
         requireActivity().finish();
         Intent intent = new Intent(getActivity(), SecondActivity.class);
+        if (username != null) {
+            intent.putExtra("username", username);
+        }
         startActivity(intent);
     }
 
@@ -131,20 +134,14 @@ public class LoginFragment extends Fragment {
                     String dbPhone = userSnapshot.child("phone").getValue(String.class);
                     String dbPassword = userSnapshot.child("password").getValue(String.class);
 
-                    // Log values for debugging
-                    Log.d("LoginDebug", "Input Credential: " + credential);
-                    Log.d("LoginDebug", "Input Password: " + password);
-                    Log.d("LoginDebug", "Stored Username: " + dbUsername);
-                    Log.d("LoginDebug", "Stored Email: " + dbEmail);
-                    Log.d("LoginDebug", "Stored Phone: " + dbPhone);
-                    Log.d("LoginDebug", "Stored Password: " + dbPassword);
-
                     // Check credentials and password
                     if ((credential.equals(dbUsername) || credential.equals(dbEmail) || credential.equals(dbPhone))
                             && password.equals(dbPassword)) {
                         isUserFound = true;
                         Toast.makeText(getContext(), "Connexion réussie", Toast.LENGTH_LONG).show();
-                        navigateToSecondActivity();
+
+                        // Navigate to SecondActivity with the username
+                        navigateToSecondActivity(dbUsername);
                         break;
                     }
                 }
