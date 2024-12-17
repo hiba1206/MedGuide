@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "790420139379",
+    "firebase_url": "https://medguide-343d6-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "medguide-343d6",
+    "storage_bucket": "medguide-343d6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:790420139379:android:71c9599cc4dd3f94542906",
+        "android_client_info": {
+          "package_name": "com.example.medguide"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVBcZJJ3L5XNOf5ZyHK3BoehpX1y5DU-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
