@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.medguide.models.User;
@@ -34,18 +36,30 @@ import okhttp3.Response;
 public class HomeFragment extends Fragment {
     private static final String TAG = "HomeFragment";
     private EditText symptomsInput;
-    private Button submitButton;
+    private ImageButton submitButton;
     private String symptoms = "";
     private TextView responseTextView;
+    private View rootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         symptomsInput = rootView.findViewById(R.id.symptomsInput);
         responseTextView = rootView.findViewById(R.id.responseTextView);
         submitButton = rootView.findViewById(R.id.sendButton);
+
+        // Find the FrameLayout and Close Button
+        FrameLayout chatgptResponseContainer = rootView.findViewById(R.id.chatgptresponse_container);
+        ImageButton closeButton = rootView.findViewById(R.id.closeButton);
+
+        // Set up a click listener for the close button
+        closeButton.setOnClickListener(v -> {
+            chatgptResponseContainer.setVisibility(View.GONE);
+            symptomsInput.setEnabled(true); // Re-enable EditText
+        });
+
 
         submitButton.setOnClickListener(view -> {
             // Disable the button to prevent multiple clicks
@@ -95,8 +109,7 @@ public class HomeFragment extends Fragment {
                                 if (user != null) {
                                     Log.d(TAG, "User data retrieved: " + user.toString());
 
-                                    String name = user.getNom() != null ? user.getNom() : "N/A";
-                                    String prenom = user.getPrenom() != null ? user.getPrenom() : "N/A";
+
                                     String dateNaissance = user.getDateNaissance() != null ? user.getDateNaissance() : "N/A";
                                     String sexe = user.getSexe() != null ? user.getSexe() : "N/A";
                                     double taille = user.getTaille() != -1 ? user.getTaille() : -1;
@@ -107,7 +120,7 @@ public class HomeFragment extends Fragment {
                                     String detailsAllergies = user.getDetailsAllergies() != null ? user.getDetailsAllergies() : "N/A";
                                     String groupeSanguin = user.getGroupeSanguin() != null ? user.getGroupeSanguin() : "N/A";
 
-                                    String chatGptPrompt = generateChatGptPrompt(name, prenom, dateNaissance, sexe,
+                                    String chatGptPrompt = generateChatGptPrompt(dateNaissance, sexe,
                                             taille, poids, handicape, diabetique, allergies,
                                             detailsAllergies, groupeSanguin, symptoms);
 
@@ -135,9 +148,9 @@ public class HomeFragment extends Fragment {
     private void callOpenAiApi(String prompt) {
         // Create a custom OkHttpClient with timeouts
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(60, TimeUnit.SECONDS)  // Set connection timeout
-                .readTimeout(60, TimeUnit.SECONDS)     // Set read timeout
-                .writeTimeout(60, TimeUnit.SECONDS)    // Set write timeout
+                .connectTimeout(20, TimeUnit.SECONDS)  // Set connection timeout
+                .readTimeout(20, TimeUnit.SECONDS)     // Set read timeout
+                .writeTimeout(40, TimeUnit.SECONDS)    // Set write timeout
                 .build();
 
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -150,7 +163,7 @@ public class HomeFragment extends Fragment {
                     .put("content", prompt)
             ));
 
-            RequestBody body = RequestBody.create(jsonObject.toString(), JSON);
+            RequestBody body = RequestBody.create(JSON, jsonObject.toString());
             Request request = new Request.Builder()
                     .url("https://api.openai.com/v1/chat/completions")
                     .header("Authorization", "Bearer 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")
@@ -175,9 +188,18 @@ public class HomeFragment extends Fragment {
                         String result = extractApiResponse(responseBody);
 
                         getActivity().runOnUiThread(() -> {
+                            // Set the response text
                             responseTextView.setText(result);
-                            responseTextView.setVisibility(View.VISIBLE);
+
+                            // Make the container (FrameLayout) visible
+                            FrameLayout chatgptResponseContainer = rootView.findViewById(R.id.chatgptresponse_container);
+                            chatgptResponseContainer.setVisibility(View.VISIBLE);
+                            symptomsInput.setEnabled(false); // Disable EditText
+
+                            // Optional: Add animations for a smoother appearance
+                            chatgptResponseContainer.animate().alpha(1.0f).setDuration(300).start();
                         });
+
                     } else {
                         Log.e(TAG, "API response failed: " + response.message());
                         getActivity().runOnUiThread(() -> {
@@ -185,6 +207,7 @@ public class HomeFragment extends Fragment {
                         });
                     }
                 }
+
             });
         } catch (Exception e) {
             Log.e(TAG, "Error preparing API request: " + e.getMessage());
@@ -205,25 +228,24 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private String generateChatGptPrompt(String name, String prenom, String dateNaissance,
+    private String generateChatGptPrompt(String dateNaissance,
                                          String sexe, double taille, double poids, boolean handicape, boolean diabetique,
                                          boolean allergies, String detailsAllergies, String groupeSanguin, String symptoms) {
-        return "User Information:\n" +
-                "Name: " + name + "\n" +
-                "Prenom: " + prenom + "\n" +
-                "Date of Birth: " + dateNaissance + "\n" +
-                "Gender: " + sexe + "\n" +
-                "Height: " + taille + " cm\n" +
-                "Weight: " + poids + " kg\n" +
-                "Handicapped: " + (handicape ? "Oui" : "Non") + "\n" +
-                "Diabetic: " + (diabetique ? "Oui" : "Non") + "\n" +
-                "Allergies: " + (allergies ? "Oui" : "Non") + "\n" +
-                (allergies ? "Allergy Details: " + detailsAllergies + "\n" : "") +
-                "Blood Group: " + groupeSanguin + "\n" +
-                "Symptoms: " + symptoms + "\n" +
-                "Task:\n" +
-                "1. Suggest possible illnesses.\n" +
-                "2. Recommend medications (if applicable).\n" +
-                "3. Suggest the doctor specialty to consult.";
+        return "Informations personnelles :\n" +
+                "Date de naissance : " + dateNaissance + "\n" +
+                "Sexe : " + sexe + "\n" +
+                "Taille : " + taille + " cm\n" +
+                "Poids : " + poids + " kg\n" +
+                "Handicapé : " + (handicape ? "Oui" : "Non") + "\n" +
+                "Diabétique : " + (diabetique ? "Oui" : "Non") + "\n" +
+                "Allergies : " + (allergies ? "Oui" : "Non") + "\n" +
+                (allergies ? "Détails de l'allergie : " + detailsAllergies + "\n" : "") +
+                "Groupe sanguin : " + groupeSanguin + "\n" +
+                "Symptômes : " + symptoms + "\n" +
+                "Tâche :\n" +
+                "1. Suggérer des maladies possibles.\n" +
+                "2. Recommander des médicaments (si applicable).\n" +
+                "3. Suggérer la spécialité du médecin à consulter.";
+
     }
 }
