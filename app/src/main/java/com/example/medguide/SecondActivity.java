@@ -117,6 +117,20 @@ public class SecondActivity extends AppCompatActivity {
             return true;
         });
 
+        String usrname = getIntent().getStringExtra("username");
+
+        HomeFragment homeFragment = new HomeFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("username", usrname);
+
+        homeFragment.setArguments(bundle);
+
+// Load the fragment
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container_logged_in, homeFragment)
+                .commit();
+
     }
 
     // Fonction pour gérer le clic sur l'image
