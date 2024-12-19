@@ -10,25 +10,19 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
+        android:id="@+id/profil"
         android:layout_width="wrap_content"
         android:layout_height="47dp"
         android:src="@drawable/profilelogo"
-        />
+        android:onClick="onProfileImageClick" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="username"
-        android:textColor="@color/black"
-        android:textStyle="bold"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="contact@example.com"
-        android:textColor="#F51B1A1A"
-        android:textSize="14sp"
-        android:layout_marginBottom="16dp"/>
+        android:id="@+id/tv_username"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="username"
+    android:textColor="@color/black"
+    android:textStyle="bold" />
 
 
 
