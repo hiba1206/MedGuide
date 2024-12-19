@@ -1,6 +1,7 @@
 package com.example.medguide.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class User implements Serializable {
     // Personal Information
@@ -173,4 +174,5 @@ public class User implements Serializable {
     public void setGroupeSanguin(String groupeSanguin) {
         this.groupeSanguin = groupeSanguin;
     }
+
 }

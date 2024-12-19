@@ -30,18 +30,51 @@
         android:textStyle="bold"
         android:textColor="#000000" />
 
-    <!-- Input Field -->
-    <EditText
-        android:id="@+id/symptomsInput"
+    <TextView
+        android:id="@+id/responseTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Response will appear here"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <!-- Input Field and Send Button -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/warningMessage"
-        android:layout_marginBottom="16dp"
-        android:hint="@string/symptomsInput"
-        android:background="@drawable/rounded_edit_text"
-        android:padding="12dp"
-        android:minHeight="48dp"
-        android:inputType="textMultiLine" />
+        android:layout_below="@id/questionText"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+
+        <!-- Input Field -->
+        <EditText
+            android:id="@+id/symptomsInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/symptomsInput"
+            android:background="@drawable/rounded_edit_text"
+            android:padding="12dp"
+            android:minHeight="48dp"
+            android:inputType="textMultiLine"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Send Button -->
+        <Button
+            android:id="@+id/sendButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/rounded_edit_text"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"
+            android:clickable="true"
+            android:focusable="true"/>
+    </LinearLayout>
+
 
     <!-- Warning Message -->
     <TextView
