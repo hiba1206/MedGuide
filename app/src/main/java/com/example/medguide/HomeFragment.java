@@ -61,6 +61,7 @@ public class HomeFragment extends Fragment {
         submitButton.setOnClickListener(view -> {
             submitButton.setEnabled(false);
             symptoms = symptomsInput.getText().toString().trim();
+            symptomsInput.setText("");
 
             if (symptoms.isEmpty()) {
                 Toast.makeText(getContext(), "Please enter symptoms.", Toast.LENGTH_SHORT).show();
@@ -177,6 +178,8 @@ public class HomeFragment extends Fragment {
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
         JSONObject jsonObject = new JSONObject();
+        String apiKey = getResources().getString(R.string.api_key);
+
         try {
             jsonObject.put("model", "gpt-4");
             jsonObject.put("messages", new JSONArray().put(new JSONObject()
@@ -187,7 +190,7 @@ public class HomeFragment extends Fragment {
             RequestBody body = RequestBody.create(JSON, jsonObject.toString());
             Request request = new Request.Builder()
                     .url("https://api.openai.com/v1/chat/completions")
-                    .header("Authorization", "Bearer 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")
+                    .header("Authorization", "Bearer "+apiKey)
                     .post(body)
                     .build();
 
