@@ -95,7 +95,7 @@ public class HealthyInfoActivity extends AppCompatActivity {
             }
             message += "Groupe sanguin : " + groupeSanguin;
 
-            Toast.makeText(HealthyInfoActivity.this, message, Toast.LENGTH_LONG).show();
+            //Toast.makeText(HealthyInfoActivity.this, message, Toast.LENGTH_LONG).show();
 
             User user = (User) getIntent().getSerializableExtra("user");
 
