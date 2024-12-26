@@ -37,7 +37,7 @@ public class HomeFragment extends Fragment {
     private EditText symptomsInput;
     private ImageButton submitButton;
     private String symptoms = "";
-    private TextView responseTextView, loadingAnimation;
+    private TextView responseTextView, loadingAnimation,question;
     private FrameLayout chatgptResponseContainer;
     private View rootView;
 
@@ -50,6 +50,7 @@ public class HomeFragment extends Fragment {
         submitButton = rootView.findViewById(R.id.sendButton);
         chatgptResponseContainer = rootView.findViewById(R.id.chatgptresponse_container);
         loadingAnimation = rootView.findViewById(R.id.loadingAnimation);
+        question = rootView.findViewById(R.id.questionText);
         ImageButton closeButton = rootView.findViewById(R.id.closeButton);
 
         closeButton.setOnClickListener(v -> {
@@ -218,6 +219,7 @@ public class HomeFragment extends Fragment {
 
                             // Display the extracted content one by one with a delay
                             Handler handler = new Handler();
+                            question.setVisibility(View.GONE);
                             for (int i = 0; i < extractedContent.length; i++) {
                                 String content = extractedContent[i];
                                 handler.postDelayed(() -> {
