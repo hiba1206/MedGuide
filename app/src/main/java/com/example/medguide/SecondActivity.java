@@ -1,6 +1,9 @@
 package com.example.medguide;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -10,7 +13,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.medguide.ui.login.LoginFragment;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.Objects;
 
 public class SecondActivity extends AppCompatActivity {
@@ -106,10 +113,27 @@ public class SecondActivity extends AppCompatActivity {
                         .replace(R.id.fragment_container_logged_in, new shareFragment())
                         .commit();
             } else if (item.getItemId() == R.id.nav_logout) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container_logged_in, new LoginFragment())
-                        .commit();
-            } else {
+                SharedPreferences prefs = this.getSharedPreferences("userPrefs", Context.MODE_PRIVATE);
+                String authMethod = prefs.getString("firebase", "google");  // Default to null if not set
+                Log.d("Logout", "Auth method retrieved: " + authMethod);
+
+                // Check the auth method and perform logout
+                if ("firebase".equals(authMethod)) {
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.clear();
+                    editor.apply();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container_logged_in, new LoginFragment())
+                            .commit();
+                } else if ("google".equals(authMethod)) {
+                    GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN).signOut();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container_logged_in, new LoginFragment())
+                            .commit();
+                }
+
+            }
+            else {
                 Toast.makeText(this, "Unknown menu item", Toast.LENGTH_SHORT).show();
             }
 

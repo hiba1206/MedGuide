@@ -1,6 +1,8 @@
 package com.example.medguide.ui.login;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,11 +13,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import com.example.medguide.ForgotPasswordActivity;
 import com.example.medguide.PersonalInfoActivity;
 import com.example.medguide.R;
@@ -34,13 +34,13 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginFragment extends Fragment {
 
-    GoogleSignInClient gsc;
-    LinearLayout googleBtn;
-    TextView textView, mdpOublie;
-    EditText etCredential, etPassword;
-    Button btnLogin;
+    private GoogleSignInClient gsc;
+    private LinearLayout googleBtn;
+    private TextView textView, mdpOublie;
+    private EditText etCredential, etPassword;
+    private Button btnLogin;
 
-    DatabaseReference databaseReference;
+    private DatabaseReference databaseReference;
 
     @Nullable
     @Override
@@ -97,6 +97,11 @@ public class LoginFragment extends Fragment {
     private void signIn() {
         Intent signInIntent = gsc.getSignInIntent();
         startActivityForResult(signInIntent, 1000);
+        SharedPreferences prefs = getContext().getSharedPreferences("userPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("auth_method", "google"); // Or "firebase", "google", depending on how they logged in
+        editor.apply();
+
     }
 
     @Override
@@ -140,6 +145,10 @@ public class LoginFragment extends Fragment {
                         isUserFound = true;
                         Toast.makeText(getContext(), "Connexion réussie", Toast.LENGTH_LONG).show();
 
+                        SharedPreferences prefs = getContext().getSharedPreferences("userPrefs", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putString("auth_method", "firebase"); // Since you are using Firebase auth
+                        editor.apply();
                         // Navigate to SecondActivity with the username
                         navigateToSecondActivity(dbUsername);
                         break;
