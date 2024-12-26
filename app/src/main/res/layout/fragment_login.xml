@@ -37,6 +37,7 @@
             android:textColorHint="#757575"
             android:textSize="14sp" />
 
+
         <!-- Password EditText -->
         <EditText
             android:id="@+id/password"
@@ -51,8 +52,11 @@
             android:inputType="textPassword"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
+            android:drawableEnd="@drawable/baseline_remove_red_eye_24"
             android:textColorHint="#757575"
             android:textSize="14sp" />
+
+
 
         <!-- Login Button -->
         <Button

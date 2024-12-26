@@ -1,11 +1,14 @@
 package com.example.medguide.ui.login;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -42,6 +45,7 @@ public class LoginFragment extends Fragment {
 
     private DatabaseReference databaseReference;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,6 +61,8 @@ public class LoginFragment extends Fragment {
         etPassword = view.findViewById(R.id.password);
         btnLogin = view.findViewById(R.id.login_button);
         mdpOublie = view.findViewById(R.id.forgot_password);
+        boolean[] isPasswordVisible = {false};
+
 
         // Google Sign-In Options
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -91,7 +97,36 @@ public class LoginFragment extends Fragment {
             }
         });
 
+
+        etPassword.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (event.getRawX() >= (etPassword.getRight() - etPassword.getCompoundDrawables()[2].getBounds().width() - 20)) {
+                    togglePasswordVisibility();
+                    return true;
+                }
+            }
+            return false;
+        });
+
+
+
         return view;
+    }
+
+    private void togglePasswordVisibility() {
+            boolean isVisible = (etPassword.getInputType() == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            if (isVisible) {
+                // Hide password
+                etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                etPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_visibility_off_24, 0);
+            } else {
+                // Show password
+                etPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                etPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_red_eye_24, 0);
+            }
+            // Move cursor to the end
+            etPassword.setSelection(etPassword.getText().length());
+
     }
 
     private void signIn() {
@@ -160,10 +195,14 @@ public class LoginFragment extends Fragment {
                 }
             }
 
+
+
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getContext(), "Erreur : " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 }
