@@ -12,6 +12,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.medguide.models.HistoryItem;
 import com.example.medguide.models.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -217,17 +219,30 @@ public class HomeFragment extends Fragment {
                             chatgptResponseContainer.setVisibility(View.VISIBLE);
                             responseTextView.setText(""); // Clear any existing content
 
-                            // Use extractApiResponse to process the response
                             String[] extractedContent = extractApiResponse(responseBody);
+                            StringBuilder responseBuilder = new StringBuilder();
 
-                            // Display the extracted content one by one with a delay
                             Handler handler = new Handler();
                             question.setVisibility(View.GONE);
                             for (int i = 0; i < extractedContent.length; i++) {
                                 String content = extractedContent[i];
+                                responseBuilder.append(content).append("\n\n");
+
                                 handler.postDelayed(() -> {
                                     responseTextView.append(content + "\n\n");
-                                }, i * 500); // Delay of 0.5 second per line or paragraph
+                                }, i * 500); // Delay of 0.5 seconds per line or paragraph
+                            }
+
+                            String finalResponse = responseBuilder.toString();
+
+                            // Save to Firebase
+                            if (getArguments() != null) {
+                                String username = getArguments().getString("username");
+                                if (username != null) {
+                                    saveToFirebase(username, symptoms, finalResponse);
+                                } else {
+                                    Toast.makeText(getContext(), "Username is missing.", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
                     } else {
@@ -241,11 +256,55 @@ public class HomeFragment extends Fragment {
 
 
 
+
             });
         } catch (Exception e) {
             Log.e(TAG, "Error preparing API request: " + e.getMessage());
         }
     }
+
+    private void saveToFirebase(String username, String symptoms, String response) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
+
+        databaseReference.orderByChild("username").equalTo(username)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                                String userId = userSnapshot.getKey(); // Get the user's unique ID
+                                if (userId != null) {
+                                    DatabaseReference historyRef = databaseReference.child(userId).child("history");
+
+                                    String timestamp = String.valueOf(System.currentTimeMillis()); // Current timestamp
+                                    HistoryItem historyItem = new HistoryItem(symptoms, response, timestamp);
+
+                                    historyRef.push().setValue(historyItem)
+                                            .addOnCompleteListener(task -> {
+                                                if (task.isSuccessful()) {
+                                                    Log.d(TAG, "History item saved successfully.");
+                                                    Toast.makeText(getContext(), "Data saved successfully.", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Log.e(TAG, "Failed to save history item.");
+                                                    Toast.makeText(getContext(), "Failed to save data.", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                }
+                            }
+                        } else {
+                            Log.d(TAG, "No user found with this username.");
+                            Toast.makeText(getContext(), "User not found.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.w(TAG, "Error reading data", databaseError.toException());
+                        Toast.makeText(getContext(), "Error reading user data.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
 
     private String[] extractApiResponse(String responseBody) {
         try {
