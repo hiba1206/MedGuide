@@ -118,15 +118,30 @@ public class HealthyInfoActivity extends AppCompatActivity {
 
             finish();
 
-            // Go to the next activity
+            Intent intent = getIntent();
+            boolean isGoogleSignIn = intent.getBooleanExtra("isGoogleSignIn", false);
+
+            if (isGoogleSignIn) {
+                Intent nextIntent = new Intent(HealthyInfoActivity.this, SecondActivity.class);
+                nextIntent.putExtra("showHomeFragment", true);
+                startActivity(nextIntent);
+            } else {
             Intent nextIntent = new Intent(HealthyInfoActivity.this, MainActivity.class);
             startActivity(nextIntent);
+            }
         });
     }
 
     private void saveUserToFirebase(User user) {
-        // Generate a unique key for the user
-        String userId = databaseReference.push().getKey();
+        String userId;
+        Intent intent = getIntent();
+        boolean isGoogleSignIn = intent.getBooleanExtra("isGoogleSignIn", false);
+        if (isGoogleSignIn) {
+             userId = getIntent().getStringExtra("userId");
+        } else {
+            userId = databaseReference.push().getKey();
+        }
+
 
         // Check if the generated key is valid
         if (userId == null) {

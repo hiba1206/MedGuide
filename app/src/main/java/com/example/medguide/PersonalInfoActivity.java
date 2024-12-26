@@ -51,6 +51,15 @@ public class PersonalInfoActivity extends AppCompatActivity {
         // Date Picker for birthdate
         etDateNaissance.setOnClickListener(v -> showDatePicker());
 
+        // Check if user signed in with Google and pre-fill data
+        Intent intent = getIntent();
+        boolean isGoogleSignIn = intent.getBooleanExtra("isGoogleSignIn", false);
+
+        if (isGoogleSignIn) {
+            prefillGoogleUserData(intent);
+        }
+
+
         // Next button click
         btnNext.setOnClickListener(v -> {
             if (validateFields()) {
@@ -62,6 +71,32 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 checkForExistingUser(email, username, phone);
             }
         });
+    }
+
+    private void prefillGoogleUserData(Intent intent) {
+        // Retrieve user data from Google Sign-In
+        String firstName = intent.getStringExtra("firstName");
+        String lastName = intent.getStringExtra("lastName");
+        String email = intent.getStringExtra("email");
+
+        System.out.println("Google Sign-In Data: " +
+                "First Name: " + firstName +
+                ", Last Name: " + lastName +
+                ", Email: " + email);
+
+        // Pre-fill the corresponding fields
+        if (!TextUtils.isEmpty(firstName)) {
+            etPrenom.setText(firstName);
+            etPrenom.setEnabled(false);
+        }
+        if (!TextUtils.isEmpty(lastName)) {
+            etNom.setText(lastName);
+            etNom.setEnabled(false);
+        }
+        if (!TextUtils.isEmpty(email)) {
+            etEmail.setText(email);
+            etEmail.setEnabled(false); // Disable editing for email
+        }
     }
 
     private void showDatePicker() {
@@ -114,7 +149,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
         // Validate password (at least 8 characters, contains at least one uppercase letter, one special character, and one number)
         String password = etPassword.getText().toString().trim();
-        if (password.length() < 8 || !password.matches(".*[A-Z].*") || !password.matches(".*[0-9].*") || !password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
+        if (password.length() < 8 || !password.matches(".*[A-Z].*") || !password.matches(".*[0-9].*") || !password.matches(".*[!@#$%^&*(),.?\":{}|<>_-].*")) {
             Toast.makeText(this, "Le mot de passe doit contenir au moins 8 caractères, un chiffre, une lettre majuscule et un caractère spécial !", Toast.LENGTH_LONG).show();
             return false;
         }
@@ -150,6 +185,12 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
                     if (email.equals(dbEmail)) {
                         isEmailTaken = true;
+                        Intent intent = getIntent();
+                        boolean isGoogleSignIn = intent.getBooleanExtra("isGoogleSignIn", false);
+
+                        if (isGoogleSignIn) {
+                            isEmailTaken = false;
+                        }
                     }
                     if (username.equals(dbUsername)) {
                         isUsernameTaken = true;
@@ -179,6 +220,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     private void proceedWithRegistration(String email, String username, String phone) {
+
         // Create a new User object
         User user = new User(
                 etUsername.getText().toString().trim(),
@@ -191,9 +233,13 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 etPassword.getText().toString()
         );
 
+        String userId =getIntent().getStringExtra("userId");
+
         // Pass the user object to the next activity
         Intent intent = new Intent(PersonalInfoActivity.this, HealthyInfoActivity.class);
         intent.putExtra("user", user);
+        intent.putExtra("userId", userId); // Pass the Google user ID
+        intent.putExtra("isGoogleSignIn", true); // Indicate Google Sign-In
         startActivity(intent);
         finish();
     }

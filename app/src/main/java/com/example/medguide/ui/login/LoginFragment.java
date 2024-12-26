@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,7 @@ import com.example.medguide.ForgotPasswordActivity;
 import com.example.medguide.PersonalInfoActivity;
 import com.example.medguide.R;
 import com.example.medguide.SecondActivity;
+import com.example.medguide.models.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -61,6 +61,7 @@ public class LoginFragment extends Fragment {
         // Google Sign-In Options
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
+                .requestProfile()
                 .build();
         gsc = GoogleSignIn.getClient(requireContext(), gso);
 
@@ -104,21 +105,78 @@ public class LoginFragment extends Fragment {
 
     }
 
+    String firstName ;
+    String lastName;
+    String email ;
+    String userId;
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1000) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firstName = account.getGivenName();
+                lastName = account.getFamilyName();
+                email = account.getEmail();
+                userId = account.getId();
+
+                // Check if the user has already been redirected and saved their data
+                SharedPreferences prefs = getContext().getSharedPreferences("userPrefs", Context.MODE_PRIVATE);
+                boolean hasCompletedInfo = prefs.getBoolean("hasCompletedInfo", false);
+
+                if (!hasCompletedInfo) {
+                     //First-time login, save user info and redirect to the personal info screen
+                    saveUserInfoToFirebase(firstName, lastName, email, userId);
+                } else {
+                    // User has already completed the info screen, you can just navigate directly
+                   navigateToSecondActivity(null);
+                 }
                 task.getResult(ApiException.class);
-                navigateToSecondActivity(null); // Pas d'username pour Google Login
+
             } catch (ApiException e) {
                 Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private void navigateToSecondActivity(String username) {
+    private void saveUserInfoToFirebase(String firstName, String lastName, String email, String userId) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference userRef = database.getReference("users").child(userId);
+
+        // Create a User object to store the details
+        User user = new User(firstName, lastName, email);
+
+        // Save to Firebase Database
+        userRef.setValue(user).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                // Mark the user as having completed the info screen
+                SharedPreferences prefs = getContext().getSharedPreferences("userPrefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+               editor.putBoolean("hasCompletedInfo", true);  // Mark as completed
+                editor.apply();
+
+                // Redirect the user to the personal info screen
+                redirectToInfoScreen();
+            } else {
+                Toast.makeText(getContext(), "Failed to save user information.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void redirectToInfoScreen() {
+        Intent intent = new Intent(getActivity(), PersonalInfoActivity.class);
+        intent.putExtra("isGoogleSignIn", true);
+        intent.putExtra("firstName", firstName); // Replace with actual variable holding the data
+        intent.putExtra("lastName", lastName);
+        intent.putExtra("email", email);
+        intent.putExtra("userId", userId);
+        startActivity(intent);
+        requireActivity().finish();
+    }
+
+        private void navigateToSecondActivity(String username) {
         requireActivity().finish();
         Intent intent = new Intent(getActivity(), SecondActivity.class);
         if (username != null) {
