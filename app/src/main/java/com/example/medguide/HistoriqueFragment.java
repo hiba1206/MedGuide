@@ -18,14 +18,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HistoriqueFragment extends Fragment {
 
     private RecyclerView historyRecyclerView;
     private HistoryItemAdapter adapter;
-    private List<HistoryItem> historyList = new ArrayList<>();
+    private Map<String, HistoryItem> historyMap = new HashMap<>();
     private ProgressBar progressBar;
     private TextView emptyTextView;
 
@@ -39,7 +39,7 @@ public class HistoriqueFragment extends Fragment {
 
         // Set up RecyclerView
         historyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new HistoryItemAdapter(historyList);
+        adapter = new HistoryItemAdapter(historyMap);
         historyRecyclerView.setAdapter(adapter);
 
         // Retrieve username from arguments
@@ -66,7 +66,7 @@ public class HistoriqueFragment extends Fragment {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        historyList.clear(); // Clear previous data
+                        historyMap.clear(); // Clear previous data
 
                         if (dataSnapshot.exists()) {
                             for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
@@ -75,7 +75,7 @@ public class HistoriqueFragment extends Fragment {
                                     for (DataSnapshot itemSnapshot : historySnapshot.getChildren()) {
                                         HistoryItem historyItem = itemSnapshot.getValue(HistoryItem.class);
                                         if (historyItem != null) {
-                                            historyList.add(historyItem);
+                                            historyMap.put(itemSnapshot.getKey(), historyItem);
                                         }
                                     }
                                 } else {
@@ -88,13 +88,13 @@ public class HistoriqueFragment extends Fragment {
 
                         progressBar.setVisibility(View.GONE);
 
-                        if (historyList.isEmpty()) {
+                        if (historyMap.isEmpty()) {
                             emptyTextView.setVisibility(View.VISIBLE);
                             historyRecyclerView.setVisibility(View.GONE);
                         } else {
                             emptyTextView.setVisibility(View.GONE);
                             historyRecyclerView.setVisibility(View.VISIBLE);
-                            adapter.notifyDataSetChanged();
+                            adapter.updateData(historyMap);  // Update adapter with new data
                         }
                     }
 

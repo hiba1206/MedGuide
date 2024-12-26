@@ -87,6 +87,7 @@ public class SecondActivity extends AppCompatActivity {
 
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container_logged_in, profilFragment)
+                        .addToBackStack(null)
                         .commit();
             } else if (item.getItemId() == R.id.nav_historique) {
                 HistoriqueFragment historiqueFragment = new HistoriqueFragment();
@@ -98,6 +99,7 @@ public class SecondActivity extends AppCompatActivity {
 
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container_logged_in, historiqueFragment)
+                        .addToBackStack(null)
                         .commit();
             } else if (item.getItemId() == R.id.nav_doctors) {
                 getSupportFragmentManager().beginTransaction()

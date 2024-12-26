@@ -3,6 +3,7 @@ package com.example.medguide.models;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class User implements Serializable {
     // Personal Information
@@ -17,7 +18,8 @@ public class User implements Serializable {
     private String sexe;   // "Homme" or "Femme"
     private String password;
     private String userId;
-    private List<HistoryItem> history = new ArrayList<>(); // Initialize the list
+    private Map<String, Object> history; // Replace List with Map if Firebase stores history as a map
+
 
 
 
@@ -50,22 +52,17 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    // Getters and Setters
-    public List<HistoryItem> getHistory() {
+    public Map<String, Object> getHistory() {
         return history;
     }
 
-    public void setHistory(List<HistoryItem> history) {
+    public void setHistory(Map<String, Object> history) {
         this.history = history;
     }
 
-    // Method to add a single history item
-    public void addHistoryItem(HistoryItem item) {
-        if (this.history == null) {
-            this.history = new ArrayList<>();
-        }
-        this.history.add(item);
-    }
+
+
+
 
     public String getUserId() {
         return userId;

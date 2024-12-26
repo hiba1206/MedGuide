@@ -3,24 +3,31 @@ package com.example.medguide.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.medguide.R;
 import com.example.medguide.models.HistoryItem;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class HistoryItemAdapter extends RecyclerView.Adapter<HistoryItemAdapter.HistoryViewHolder> {
 
     private List<HistoryItem> historyList;
 
-    public HistoryItemAdapter(List<HistoryItem> historyList) {
-        this.historyList = historyList;
+    public HistoryItemAdapter(Map<String, HistoryItem> historyMap) {
+        // Convert the Map to a List for RecyclerView
+        this.historyList = new ArrayList<>(historyMap.values());
+    }
+
+    public void updateData(Map<String, HistoryItem> newHistoryItems) {
+        this.historyList.clear();
+        this.historyList.addAll(new ArrayList<>(newHistoryItems.values()));
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -60,7 +67,6 @@ public class HistoryItemAdapter extends RecyclerView.Adapter<HistoryItemAdapter.
         });
     }
 
-
     @Override
     public int getItemCount() {
         return historyList.size();
@@ -77,7 +83,6 @@ public class HistoryItemAdapter extends RecyclerView.Adapter<HistoryItemAdapter.
             viewMoreTextView = itemView.findViewById(R.id.viewMoreTextView);
         }
     }
-
 
     private String convertTimestampToDate(long timestampMillis) {
         // Convert timestamp (in milliseconds) to a human-readable date
