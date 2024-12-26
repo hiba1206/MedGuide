@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;  // Import Log class
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,6 +104,8 @@ public class LoginFragment extends Fragment {
         editor.putString("auth_method", "google"); // Or "firebase", "google", depending on how they logged in
         editor.apply();
 
+        // Log the SharedPreferences operation
+        Log.d("LoginFragment", "User sign-in via Google, auth_method saved in SharedPreferences.");
     }
 
     String firstName ;
@@ -127,16 +130,18 @@ public class LoginFragment extends Fragment {
                 boolean hasCompletedInfo = prefs.getBoolean("hasCompletedInfo", false);
 
                 if (!hasCompletedInfo) {
-                     //First-time login, save user info and redirect to the personal info screen
+                    //First-time login, save user info and redirect to the personal info screen
                     saveUserInfoToFirebase(firstName, lastName, email, userId);
+                    Log.d("LoginFragment", "First-time login: user info saved and redirected to Personal Info screen.");
                 } else {
                     // User has already completed the info screen, you can just navigate directly
-                   navigateToSecondActivity(null);
-                 }
-                task.getResult(ApiException.class);
+                    navigateToSecondActivity(null);
+                    Log.d("LoginFragment", "User info already completed, navigating directly to SecondActivity.");
+                }
 
             } catch (ApiException e) {
                 Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                Log.e("LoginFragment", "Google sign-in failed: " + e.getMessage());
             }
         }
     }
@@ -154,13 +159,17 @@ public class LoginFragment extends Fragment {
                 // Mark the user as having completed the info screen
                 SharedPreferences prefs = getContext().getSharedPreferences("userPrefs", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
-               editor.putBoolean("hasCompletedInfo", true);  // Mark as completed
+                editor.putBoolean("hasCompletedInfo", true);  // Mark as completed
                 editor.apply();
+
+                // Log the completion of user info
+                Log.d("LoginFragment", "User information saved to Firebase, 'hasCompletedInfo' marked as true in SharedPreferences.");
 
                 // Redirect the user to the personal info screen
                 redirectToInfoScreen();
             } else {
                 Toast.makeText(getContext(), "Failed to save user information.", Toast.LENGTH_SHORT).show();
+                Log.e("LoginFragment", "Failed to save user info to Firebase: " + task.getException());
             }
         });
     }
@@ -174,15 +183,17 @@ public class LoginFragment extends Fragment {
         intent.putExtra("userId", userId);
         startActivity(intent);
         requireActivity().finish();
+        Log.d("LoginFragment", "Redirected to Personal Info screen.");
     }
 
-        private void navigateToSecondActivity(String username) {
+    private void navigateToSecondActivity(String username) {
         requireActivity().finish();
         Intent intent = new Intent(getActivity(), SecondActivity.class);
         if (username != null) {
             intent.putExtra("username", username);
         }
         startActivity(intent);
+        Log.d("LoginFragment", "Navigating to SecondActivity with username: " + username);
     }
 
     private void verifyLogin(String credential, String password) {
@@ -207,6 +218,9 @@ public class LoginFragment extends Fragment {
                         SharedPreferences.Editor editor = prefs.edit();
                         editor.putString("auth_method", "firebase"); // Since you are using Firebase auth
                         editor.apply();
+                        // Log successful login
+                        Log.d("LoginFragment", "User logged in successfully using Firebase, auth_method saved to SharedPreferences.");
+
                         // Navigate to SecondActivity with the username
                         navigateToSecondActivity(dbUsername);
                         break;
@@ -215,12 +229,14 @@ public class LoginFragment extends Fragment {
 
                 if (!isUserFound) {
                     Toast.makeText(getContext(), "Identifiants invalides", Toast.LENGTH_SHORT).show();
+                    Log.d("LoginFragment", "Invalid credentials entered by user.");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getContext(), "Erreur : " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("LoginFragment", "Error while verifying login credentials: " + error.getMessage());
             }
         });
     }
