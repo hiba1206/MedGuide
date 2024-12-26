@@ -93,13 +93,33 @@ public class PersonalInfoActivity extends AppCompatActivity {
             }
         }
 
+        // Validate username length (must be at least 5 characters)
+        if (etUsername.getText().toString().length() < 5) {
+            Toast.makeText(this, "Le nom d'utilisateur doit contenir au moins 5 caractères !", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
         // Validate email format
         if (!isValidEmail(etEmail.getText().toString().trim())) {
             Toast.makeText(this, "L'email n'est pas valide !", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        // Check password match
+        // Validate phone number (must contain exactly 10 digits)
+        String phoneNumber = etPhone.getText().toString().trim();
+        if (phoneNumber.length() != 10 || !phoneNumber.matches("[0-9]+")) {
+            Toast.makeText(this, "Le numéro de téléphone doit contenir exactement 10 chiffres !", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        // Validate password (at least 8 characters, contains at least one uppercase letter, one special character, and one number)
+        String password = etPassword.getText().toString().trim();
+        if (password.length() < 8 || !password.matches(".*[A-Z].*") || !password.matches(".*[0-9].*") || !password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
+            Toast.makeText(this, "Le mot de passe doit contenir au moins 8 caractères, un chiffre, une lettre majuscule et un caractère spécial !", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        // Check if passwords match
         if (!etPassword.getText().toString().equals(etConfirmPassword.getText().toString())) {
             Toast.makeText(this, "Les mots de passe ne correspondent pas !", Toast.LENGTH_LONG).show();
             return false;
@@ -107,6 +127,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
         return true;
     }
+
 
     private boolean isValidEmail(String email) {
         return email != null && Patterns.EMAIL_ADDRESS.matcher(email).matches();
