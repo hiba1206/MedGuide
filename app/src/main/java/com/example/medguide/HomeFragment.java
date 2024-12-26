@@ -19,11 +19,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
-
+import android.os.Handler;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -37,62 +37,83 @@ public class HomeFragment extends Fragment {
     private EditText symptomsInput;
     private ImageButton submitButton;
     private String symptoms = "";
-    private TextView responseTextView;
+    private TextView responseTextView, loadingAnimation;
+    private FrameLayout chatgptResponseContainer;
     private View rootView;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         symptomsInput = rootView.findViewById(R.id.symptomsInput);
         responseTextView = rootView.findViewById(R.id.responseTextView);
         submitButton = rootView.findViewById(R.id.sendButton);
-
-        // Find the FrameLayout and Close Button
-        FrameLayout chatgptResponseContainer = rootView.findViewById(R.id.chatgptresponse_container);
+        chatgptResponseContainer = rootView.findViewById(R.id.chatgptresponse_container);
+        loadingAnimation = rootView.findViewById(R.id.loadingAnimation);
         ImageButton closeButton = rootView.findViewById(R.id.closeButton);
 
-        // Set up a click listener for the close button
         closeButton.setOnClickListener(v -> {
             chatgptResponseContainer.setVisibility(View.GONE);
             symptomsInput.setEnabled(true); // Re-enable EditText
         });
 
-
         submitButton.setOnClickListener(view -> {
-            // Disable the button to prevent multiple clicks
             submitButton.setEnabled(false);
-
             symptoms = symptomsInput.getText().toString().trim();
 
             if (symptoms.isEmpty()) {
-                // Show a warning message if the symptoms field is empty
                 Toast.makeText(getContext(), "Please enter symptoms.", Toast.LENGTH_SHORT).show();
-            } else {
-                Log.d(TAG, "Symptoms entered: " + symptoms);
-
-                if (getArguments() != null) {
-                    String username = getArguments().getString("username");
-                    Log.d(TAG, "Username passed to fragment: " + username);
-                    if (username != null) {
-                        fetchData(username, symptoms);
-                    } else {
-                        Log.e(TAG, "Username is null");
-                        Toast.makeText(getContext(), "Username is missing.", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Log.e(TAG, "Arguments are null");
-                    Toast.makeText(getContext(), "No arguments provided.", Toast.LENGTH_SHORT).show();
-                }
+                submitButton.setEnabled(true);
+                return;
             }
 
-            // Re-enable the button after processing
+            if (getArguments() != null) {
+                String username = getArguments().getString("username");
+                if (username != null) {
+                    fetchData(username, symptoms);
+                } else {
+                    Toast.makeText(getContext(), "Username is missing.", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getContext(), "No arguments provided.", Toast.LENGTH_SHORT).show();
+            }
             submitButton.setEnabled(true);
         });
 
         return rootView;
     }
+
+    private Handler handler;
+    private Runnable loadingRunnable;
+
+    private void animateLoadingDots(TextView loadingTextView) {
+        Log.d(TAG, "Starting loading animation...");
+        handler = new Handler();
+        final String[] dotsArray = { "", ".", "..", "..." };
+        final int[] index = { 0 };
+
+        loadingRunnable = new Runnable() {
+            @Override
+            public void run() {
+                loadingTextView.setText(dotsArray[index[0]]);
+                Log.d(TAG, "Loading animation: " + dotsArray[index[0]]);
+                index[0] = (index[0] + 1) % dotsArray.length; // Cycle through the dots
+                handler.postDelayed(this, 500); // Update every 500ms
+            }
+        };
+
+        handler.post(loadingRunnable);
+    }
+
+
+    private void stopAnimation(TextView loadingTextView) {
+        if (handler != null && loadingRunnable != null) {
+            handler.removeCallbacks(loadingRunnable); // Stop the animation
+        }
+        loadingTextView.setVisibility(View.GONE); // Hide the loading view after stopping
+    }
+
+
 
     private void fetchData(String username, String symptoms) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
@@ -147,9 +168,9 @@ public class HomeFragment extends Fragment {
     private void callOpenAiApi(String prompt) {
         // Create a custom OkHttpClient with timeouts
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(20, TimeUnit.SECONDS)  // Set connection timeout
-                .readTimeout(20, TimeUnit.SECONDS)     // Set read timeout
-                .writeTimeout(40, TimeUnit.SECONDS)    // Set write timeout
+                .connectTimeout(30, TimeUnit.SECONDS)  // Set connection timeout
+                .readTimeout(30, TimeUnit.SECONDS)     // Set read timeout
+                .writeTimeout(30, TimeUnit.SECONDS)    // Set write timeout
                 .build();
 
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -169,11 +190,16 @@ public class HomeFragment extends Fragment {
                     .post(body)
                     .build();
 
+            loadingAnimation = rootView.findViewById(R.id.loadingAnimation);
+            loadingAnimation.setVisibility(View.VISIBLE);
+            animateLoadingDots(loadingAnimation);
+
             okHttpClient.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     Log.e(TAG, "API call failed: " + e.getMessage());
                     getActivity().runOnUiThread(() -> {
+                        stopAnimation(loadingAnimation);
                         Toast.makeText(getContext(), "API call failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     });
                 }
@@ -182,30 +208,33 @@ public class HomeFragment extends Fragment {
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.isSuccessful()) {
                         String responseBody = response.body().string();
-                        Log.d(TAG, "API response: " + responseBody);
-
-                        String result = extractApiResponse(responseBody);
-
                         getActivity().runOnUiThread(() -> {
-                            // Set the response text
-                            responseTextView.setText(result);
-
-                            // Make the container (FrameLayout) visible
-                            FrameLayout chatgptResponseContainer = rootView.findViewById(R.id.chatgptresponse_container);
+                            stopAnimation(loadingAnimation);
                             chatgptResponseContainer.setVisibility(View.VISIBLE);
-                            symptomsInput.setEnabled(false); // Disable EditText
+                            responseTextView.setText(""); // Clear any existing content
 
-                            // Optional: Add animations for a smoother appearance
-                            chatgptResponseContainer.animate().alpha(1.0f).setDuration(300).start();
+                            // Use extractApiResponse to process the response
+                            String[] extractedContent = extractApiResponse(responseBody);
+
+                            // Display the extracted content one by one with a delay
+                            Handler handler = new Handler();
+                            for (int i = 0; i < extractedContent.length; i++) {
+                                String content = extractedContent[i];
+                                handler.postDelayed(() -> {
+                                    responseTextView.append(content + "\n\n");
+                                }, i * 500); // Delay of 0.5 second per line or paragraph
+                            }
                         });
-
                     } else {
-                        Log.e(TAG, "API response failed: " + response.message());
                         getActivity().runOnUiThread(() -> {
+                            stopAnimation(loadingAnimation);
                             Toast.makeText(getContext(), "API response failed", Toast.LENGTH_SHORT).show();
                         });
                     }
                 }
+
+
+
 
             });
         } catch (Exception e) {
@@ -213,17 +242,19 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private String extractApiResponse(String responseBody) {
+    private String[] extractApiResponse(String responseBody) {
         try {
             JSONObject jsonResponse = new JSONObject(responseBody);
             JSONArray choices = jsonResponse.getJSONArray("choices");
             JSONObject choice = choices.getJSONObject(0);
-            String result = choice.getJSONObject("message").getString("content");
-            Log.d(TAG, "Extracted result: " + result);
-            return result;
+            String content = choice.getJSONObject("message").getString("content");
+            Log.d(TAG, "Extracted content: " + content);
+
+            // Split the content into lines or items
+            return content.split("\\n\\s*\\d+\\.\\s*");
         } catch (Exception e) {
             Log.e(TAG, "Error extracting response: " + e.getMessage());
-            return "Error extracting response.";
+            return new String[] {"Error extracting response."};
         }
     }
 
@@ -242,9 +273,9 @@ public class HomeFragment extends Fragment {
                 "Groupe sanguin : " + groupeSanguin + "\n" +
                 "Symptômes : " + symptoms + "\n" +
                 "Tâche :\n" +
-                "1. Suggérer des maladies possibles.\n" +
-                "2. Recommander des médicaments (si applicable).\n" +
-                "3. Suggérer la spécialité du médecin à consulter.";
+                "Suggérer des maladies possibles.\n" +
+                "Recommander des médicaments (si applicable).\n" +
+                "Suggérer la spécialité du médecin à consulter.";
 
     }
 }
