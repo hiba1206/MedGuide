@@ -1,6 +1,7 @@
 package com.example.medguide.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class User implements Serializable {
@@ -16,6 +17,8 @@ public class User implements Serializable {
     private String sexe;   // "Homme" or "Femme"
     private String password;
     private String userId;
+    private List<HistoryItem> history = new ArrayList<>(); // Initialize the list
+
 
 
 
@@ -26,6 +29,8 @@ public class User implements Serializable {
     private String detailsAllergies;
     private String groupeSanguin;
     private static final long serialVersionUID = 1L;
+
+
 
 
     // Default constructor required for Firebase
@@ -46,6 +51,21 @@ public class User implements Serializable {
     }
 
     // Getters and Setters
+    public List<HistoryItem> getHistory() {
+        return history;
+    }
+
+    public void setHistory(List<HistoryItem> history) {
+        this.history = history;
+    }
+
+    // Method to add a single history item
+    public void addHistoryItem(HistoryItem item) {
+        if (this.history == null) {
+            this.history = new ArrayList<>();
+        }
+        this.history.add(item);
+    }
 
     public String getUserId() {
         return userId;
