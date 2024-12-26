@@ -1,2 +1,2 @@
 /build
-secrets.xml
+app/src/main/res/values/secrets.xml
