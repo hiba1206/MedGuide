@@ -22,4 +22,7 @@
     <item name="rb_allergies_oui" type="id"/>
     <item name="rb_handicape_oui" type="id"/>
     <item name="rb_diabetique_oui" type="id"/>
+    <item name="symptomsTextView" type="id"/>
+    <item name="timestampTextView" type="id"/>
+    <item name="historyRecyclerView" type="id"/>
 </resources>

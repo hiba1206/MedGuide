@@ -82,8 +82,15 @@ public class SecondActivity extends AppCompatActivity {
                         .replace(R.id.fragment_container_logged_in, profilFragment)
                         .commit();
             } else if (item.getItemId() == R.id.nav_historique) {
+                HistoriqueFragment historiqueFragment = new HistoriqueFragment();
+
+                // Pass the username to HistoriqueFragment
+                Bundle bundle = new Bundle();
+                bundle.putString("username", username);
+                historiqueFragment.setArguments(bundle);
+
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container_logged_in, new HistoriqueFragment())
+                        .replace(R.id.fragment_container_logged_in, historiqueFragment)
                         .commit();
             } else if (item.getItemId() == R.id.nav_doctors) {
                 getSupportFragmentManager().beginTransaction()
