@@ -79,7 +79,11 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.nav_pharmacie) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new pharmacieFragment()).commit();
             } else if (item.getItemId() == R.id.nav_pharmacie_garde) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new gardeFragment()).commit();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new gardeFragment())
+                        .commit();
+
             } else if (item.getItemId() == R.id.nav_share) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new shareFragment()).commit();
             } else if (item.getItemId() == R.id.nav_login) {
