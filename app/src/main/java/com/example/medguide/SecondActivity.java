@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -123,21 +124,34 @@ public class SecondActivity extends AppCompatActivity {
                         .replace(R.id.fragment_container_logged_in, new shareFragment())
                         .commit();
             } else if (item.getItemId() == R.id.nav_logout) {
-                SharedPreferences prefs = getSharedPreferences("userPrefs", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putBoolean("isLoggedIn", false); // Update login state
-                editor.apply();
+                // Create an AlertDialog.Builder
+                new AlertDialog.Builder(this)
+                        .setTitle("Déconnexion")
+                        .setMessage("Êtes-vous sûre de vouloir vous déconnecter?")
+                        .setPositiveButton("Oui", (dialog, which) -> {
+                            // Perform logout actions
+                            SharedPreferences prefs = getSharedPreferences("userPrefs", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putBoolean("isLoggedIn", false); // Update login state
+                            editor.apply();
 
-                // Clear Google Sign-In or Firebase authentication if needed
-                GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN).signOut();
-                FirebaseAuth.getInstance().signOut();
+                            // Clear Google Sign-In or Firebase authentication if needed
+                            GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN).signOut();
+                            FirebaseAuth.getInstance().signOut();
 
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
-
+                            // Navigate back to the MainActivity
+                            Intent intent = new Intent(this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            finish();
+                        })
+                        .setNegativeButton("Non", (dialog, which) -> {
+                            // Dismiss the dialog if user cancels
+                            dialog.dismiss();
+                        })
+                        .show();
             }
+
             else {
                 Toast.makeText(this, "Unknown menu item", Toast.LENGTH_SHORT).show();
             }
