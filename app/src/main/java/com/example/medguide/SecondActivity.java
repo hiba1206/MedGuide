@@ -1,19 +1,19 @@
 package com.example.medguide;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import com.example.medguide.ui.login.LoginFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.navigation.NavigationView;
@@ -26,8 +26,6 @@ public class SecondActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ActionBarDrawerToggle toggle;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,13 +62,6 @@ public class SecondActivity extends AppCompatActivity {
         toggle.setDrawerIndicatorEnabled(false);
         toolbar.setNavigationIcon(R.drawable.hamburger);
         toolbar.setNavigationOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
-
-        // Load the default fragment
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container_logged_in, new HomeFragment())
-                    .commit();
-        }
 
         // Handle Navigation Item Selection
         navigationView.setNavigationItemSelectedListener(item -> {
@@ -123,20 +114,34 @@ public class SecondActivity extends AppCompatActivity {
                         .replace(R.id.fragment_container_logged_in, new shareFragment())
                         .commit();
             } else if (item.getItemId() == R.id.nav_logout) {
-                SharedPreferences prefs = getSharedPreferences("userPrefs", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putBoolean("isLoggedIn", false); // Update login state
-                editor.apply();
+                // Afficher une boîte de dialogue pour confirmer la déconnexion
+                new AlertDialog.Builder(SecondActivity.this)
+                        .setTitle("Confirmer la déconnexion")
+                        .setMessage("Êtes-vous sûr de vouloir vous déconnecter ?")
+                        .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Si l'utilisateur clique sur "Oui", procéder à la déconnexion
 
-                // Clear Google Sign-In or Firebase authentication if needed
-                GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN).signOut();
-                FirebaseAuth.getInstance().signOut();
+                                // Mettre à jour les préférences partagées
+                                SharedPreferences prefs = getSharedPreferences("userPrefs", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.putBoolean("isLoggedIn", false); // Mettre à jour l'état de connexion
+                                editor.apply();
 
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
+                                // Se déconnecter de Google Sign-In ou Firebase si nécessaire
+                                GoogleSignIn.getClient(SecondActivity.this, GoogleSignInOptions.DEFAULT_SIGN_IN).signOut();
+                                FirebaseAuth.getInstance().signOut();
 
+                                // Rediriger l'utilisateur vers la page de login (MainActivity)
+                                Intent intent = new Intent(SecondActivity.this, MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("Non", null) // Si l'utilisateur clique sur "Non", rien ne se passe
+                        .show();
             }
             else {
                 Toast.makeText(this, "Unknown menu item", Toast.LENGTH_SHORT).show();
@@ -146,6 +151,7 @@ public class SecondActivity extends AppCompatActivity {
             return true;
         });
 
+        // Charger le fragment principal (HomeFragment)
         String usrname = getIntent().getStringExtra("username");
 
         HomeFragment homeFragment = new HomeFragment();
@@ -155,27 +161,9 @@ public class SecondActivity extends AppCompatActivity {
 
         homeFragment.setArguments(bundle);
 
-// Load the fragment
+        // Charger le fragment
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container_logged_in, homeFragment)
-                .commit();
-
-    }
-
-    // Fonction pour gérer le clic sur l'image
-    public void onProfileImageClick(View view) {
-        // Remplacer le fragment actuel par ProfilFragment
-        ProfilFragment profilFragment = new ProfilFragment();
-
-        // Récupérer le username et le passer au fragment
-        String username = getIntent().getStringExtra("username");
-        Bundle bundle = new Bundle();
-        bundle.putString("username", username);
-        profilFragment.setArguments(bundle);
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container_logged_in, profilFragment)
-                .addToBackStack(null)
                 .commit();
     }
 
@@ -187,6 +175,4 @@ public class SecondActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
 }
-
