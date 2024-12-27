@@ -3,15 +3,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".shareFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Share Fragment"
-        android:textColor="@color/black"
-        android:textSize="30sp" />
+    <!-- Title Section -->
+<TextView
+android:id="@+id/about_title"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="À propos de MedGuide"
+android:textColor="#0097A7"
+android:textSize="24sp"
+android:textStyle="bold"
+android:layout_alignParentTop="true"
+android:layout_centerHorizontal="true"
+android:layout_marginTop="32dp"
+    android:layout_marginBottom="16dp"
+    />
 
-</RelativeLayout>
+    <!-- About Text Section -->
+<TextView
+android:id="@+id/about_text"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:text="MedGuide est votre application médicale complète, conçue pour faciliter l'accès à des informations essentielles sur la santé.\n\nAvec MedGuide, vous pouvez :\n- Accéder facilement aux informations médicales sur les médecins, médicaments, pharmacies, et même les pharmacies de garde.\n- Entrer vos symptômes pour obtenir une suggestion des maladies probables, des médicaments adaptés, et des spécialités médicales des docteurs à consulter.\n\nNotre objectif est de simplifier votre parcours médical tout en vous aidant à prendre des décisions éclairées pour votre santé et celle de vos proches.\n\nPrenez soin de vous avec MedGuide ! 🌟"
+android:textColor="#424242"
+android:textSize="16sp"
+android:lineSpacingExtra="8dp"
+android:layout_below="@id/about_title"
+android:layout_marginStart="16dp"
+android:layout_marginEnd="16dp"
+android:layout_marginTop="16dp"
+android:layout_alignParentStart="true"
+android:layout_alignParentEnd="true" />
+
+    <!-- Share Button -->
+<Button
+android:id="@+id/share_button"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:text="Partager l'application"
+android:textColor="#FFFFFF"
+android:layout_below="@id/about_text"
+android:layout_marginTop="32dp"
+    android:backgroundTint="@color/MedGuide_blue"
+    android:padding="12dp"
+    android:layout_centerHorizontal="true"
+    android:textSize="16sp"
+    android:drawablePadding="8dp"
+    android:layout_marginBottom="16dp"
+    android:background="@drawable/rounded_edit_text"/>
+    </RelativeLayout>
