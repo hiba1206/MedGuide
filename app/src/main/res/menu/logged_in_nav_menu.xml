@@ -1,52 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn = "navigation_view"
-    >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group
-        android:checkableBehavior="single">
+    <group android:checkableBehavior="single">
 
         <item
-             android:id="@+id/nav_home"
-             android:icon="@drawable/home"
-             android:title="@string/home"/>
+            android:id="@+id/nav_home"
+            android:icon="@drawable/home"
+            android:title="@string/home" />
+
         <item
             android:id="@+id/nav_historique"
             android:icon="@drawable/historique"
-            android:title="@string/historique"/>
+            android:title="@string/historique" />
+
         <item
             android:id="@+id/nav_doctors"
             android:icon="@drawable/doctors"
-            android:title="@string/medecins"/>
+            android:title="@string/medecins" />
+
         <item
             android:id="@+id/nav_medicaments"
             android:icon="@drawable/medicaments"
-            android:title="@string/medicaments"/>
+            android:title="@string/medicaments" />
+
         <item
             android:id="@+id/nav_pharmacie"
             android:icon="@drawable/pharmacie"
-            android:title="@string/pharmacies"/>
+            android:title="@string/pharmacies" />
+
         <item
             android:id="@+id/nav_pharmacie_garde"
             android:icon="@drawable/pharmacie_garde"
-            android:title="@string/garde"/>
+            android:title="@string/garde" />
+
         <item
             android:id="@+id/nav_share"
             android:icon="@drawable/share"
-            android:title="@string/partager"/>
+            android:title="@string/partager" />
 
-
-        <item
-            android:title="">
-
+        <!-- Item de déconnexion -->
+        <item android:title="">
             <menu>
                 <item
                     android:id="@+id/nav_logout"
                     android:icon="@drawable/logout"
-                    android:title="@string/logout"/>
+                    android:title="@string/logout" />
             </menu>
         </item>
+
     </group>
+
 </menu>
