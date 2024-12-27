@@ -1,6 +1,7 @@
 package com.example.medguide;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -122,24 +123,19 @@ public class SecondActivity extends AppCompatActivity {
                         .replace(R.id.fragment_container_logged_in, new shareFragment())
                         .commit();
             } else if (item.getItemId() == R.id.nav_logout) {
-                SharedPreferences prefs = this.getSharedPreferences("userPrefs", Context.MODE_PRIVATE);
-                String authMethod = prefs.getString("firebase", "google");  // Default to null if not set
-                Log.d("Logout", "Auth method retrieved: " + authMethod);
+                SharedPreferences prefs = getSharedPreferences("userPrefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putBoolean("isLoggedIn", false); // Update login state
+                editor.apply();
 
-                // Check the auth method and perform logout
-                if ("firebase".equals(authMethod)) {
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.clear();
-                    editor.apply();
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container_logged_in, new LoginFragment())
-                            .commit();
-                } else if ("google".equals(authMethod)) {
-                    GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN).signOut();
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container_logged_in, new LoginFragment())
-                            .commit();
-                }
+                // Clear Google Sign-In or Firebase authentication if needed
+                GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN).signOut();
+                FirebaseAuth.getInstance().signOut();
+
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
 
             }
             else {

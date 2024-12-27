@@ -1,6 +1,8 @@
 package com.example.medguide;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
@@ -64,13 +66,18 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.hamburger);
         toolbar.setNavigationOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new LoginFragment())
-                    .commit();
+        // Check authentication state
+        SharedPreferences prefs = getSharedPreferences("userPrefs", Context.MODE_PRIVATE);
+        boolean isLoggedIn = prefs.getBoolean("isLoggedIn", false);
+
+        NavigationView navigationView;
+        if (isLoggedIn) {
+            navigationView = findViewById(R.id.nav_view_logged_in);
+        } else {
+            navigationView = findViewById(R.id.nav_view);
         }
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.nav_doctors){
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new doctorsFragment()).commit();
@@ -95,7 +102,11 @@ public class MainActivity extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
         });
-
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, isLoggedIn ? new HomeFragment() : new LoginFragment())
+                    .commit();
+        }
 
     }
 
