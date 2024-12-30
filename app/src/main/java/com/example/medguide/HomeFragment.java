@@ -339,7 +339,8 @@ public class HomeFragment extends Fragment {
                 "Tâche :\n" +
                 "Suggérer des maladies possibles.\n" +
                 "Recommander des médicaments (si applicable).\n" +
-                "Suggérer la spécialité du médecin à consulter.";
+                "Suggérer la spécialité du médecin à consulter.\n" +
+                "Ne répond pas si ce qui est entré n'est pas des symptômes, incite l'utilisateur à saisir des symptômes";
 
     }
 }

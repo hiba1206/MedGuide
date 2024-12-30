@@ -38,8 +38,8 @@ public class ResetPasswordActivity extends AppCompatActivity {
         verifyCodeButton.setOnClickListener(v -> {
             String enteredCode = codeEditText.getText().toString().trim();
 
-            if (userEmail.isEmpty() || enteredCode.isEmpty()) {
-                Toast.makeText(this, "Please enter both email and reset code.", Toast.LENGTH_SHORT).show();
+            if (enteredCode.isEmpty()) {
+                Toast.makeText(this, "Veuillez entrer le code de réinitialisation.", Toast.LENGTH_SHORT).show();
             } else {
                 verifyResetCode(userEmail, enteredCode);
             }
@@ -62,14 +62,14 @@ public class ResetPasswordActivity extends AppCompatActivity {
                                 // Code is valid, proceed to reset password
                                 showResetPasswordLayout(userSnapshot.getKey());
                             } else {
-                                Toast.makeText(getApplicationContext(), "Reset code expired.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Ce code a expiré.", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(getApplicationContext(), "Invalid reset code.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Code Invalide.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Email not found.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Email non trouvé.", Toast.LENGTH_SHORT).show();
                 }
             }
 

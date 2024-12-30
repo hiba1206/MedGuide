@@ -3,12 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Title TextView centered at the top -->
+    <TextView
+        android:id="@+id/gardeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pharmacieGarde"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#0097A7"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="16dp" />
+
     <!-- RecyclerView for displaying the data -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pharmacyRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp" />
+        android:padding="16dp"
+        android:layout_marginTop="56dp" />
 
     <!-- ProgressBar to indicate loading -->
     <ProgressBar
@@ -16,5 +29,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="gone" /> <!-- Initially hidden -->
+        android:visibility="gone" />
 </FrameLayout>

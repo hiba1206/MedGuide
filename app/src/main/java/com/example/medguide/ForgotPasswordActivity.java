@@ -89,10 +89,10 @@ public class ForgotPasswordActivity extends AppCompatActivity{
                         intent.putExtra("RESET_CODE", resetCode);
                         startActivity(intent);
                         finish();
-                        Toast.makeText(getApplicationContext(), "Reset code sent to your email.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Le code de réinitialisation à été envoyé avec succés à votre email.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Email not found.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Email non trouvé.", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -133,21 +133,22 @@ public class ForgotPasswordActivity extends AppCompatActivity{
                         Message.RecipientType.TO,
                         InternetAddress.parse(email)
                 );
-                message.setSubject("Password Reset Request");
-                message.setText("Dear User,\n\n"
-                        + "You have requested to reset your password. Please use the following reset code:\n\n"
+                message.setSubject("Requête de réinitialisation de mot de passe");
+                message.setText("Cher utilisateur,\n\n"
+                        + "Vous avez demandé à réinitialiser votre mot de passe. Veuillez utiliser le code de réinitialisation suivant :\n\n"
                         + resetCode + "\n\n"
-                        + "This code is valid for one hour. If you did not request a password reset, please ignore this email.\n\n"
-                        + "Best regards,\n"
-                        + "Your App Team");
+                        + "Ce code est valide pendant une heure. Si vous n'avez pas demandé de réinitialisation de mot de passe, veuillez ignorer cet e-mail.\n\n"
+                        + "Cordialement,\n"
+                        + "L'équipe de votre application MedGuide");
+
 
                 // Send the email
                 Transport.send(message);
-                Log.d("Email", "Reset code sent successfully to: " + email);
+                Log.d("Email", "Le code de réinitialisation à été envoyé avec succés à: " + email);
 
             } catch (MessagingException e) {
                 e.printStackTrace();
-                Log.e("EmailError", "Failed to send email: " + e.getMessage());
+                Log.e("EmailError", "L'envoi de l'email à échoué: " + e.getMessage());
             }
         }).start();
     }

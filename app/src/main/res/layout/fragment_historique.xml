@@ -1,7 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_light">
+    android:background="@android:color/background_light"
+    android:padding="16dp"
+    >
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -11,10 +13,22 @@
         android:visibility="gone" />
 
     <TextView
+        android:id="@+id/historique"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/historique"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#0097A7"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="12dp" />
+
+    <TextView
         android:id="@+id/emptyTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No history available."
+        android:text="Auncun historique pour le moment."
         android:gravity="center"
         android:layout_centerInParent="true"
         android:visibility="gone"
@@ -26,5 +40,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="16dp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:paddingTop="20dp"/>
 </RelativeLayout>

@@ -35,12 +35,12 @@ public class NewPasswordActivity extends AppCompatActivity {
             String confirmPassword = confirmPasswordEditText.getText().toString();
 
             if (newPassword.isEmpty() || confirmPassword.isEmpty()) {
-                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (!newPassword.equals(confirmPassword)) {
-                Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Les mots de passe ne correspondent pas", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -52,7 +52,7 @@ public class NewPasswordActivity extends AppCompatActivity {
             userRef.child("resetCode").removeValue();
             userRef.child("resetCodeExpiry").removeValue();
 
-            Toast.makeText(this, "Password reset successfully!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Réinitialisation du mot de passe réussie !", Toast.LENGTH_SHORT).show();
             finish(); // Close the activity
         });
     }

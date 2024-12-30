@@ -66,6 +66,8 @@
     <string name="password_reinitialization_form">Formulaire de réinitialisation du mot de passe</string>
     <string name="reinitialize_password_with_email">Entrez votre adresse email</string>
     <string name="historique">Historique</string>
+    <string name="pharmacieGarde">Pharmacies De Garde</string>
+
 
 
 </resources>

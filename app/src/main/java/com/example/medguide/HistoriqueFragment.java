@@ -48,10 +48,10 @@ public class HistoriqueFragment extends Fragment {
             if (username != null) {
                 fetchHistoryFromFirebase(username);
             } else {
-                Toast.makeText(getContext(), "Username is missing.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Le nom d'utilisateur est manquant.", Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(getContext(), "Arguments are missing.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Les arguments sont manquants.", Toast.LENGTH_SHORT).show();
         }
 
         return rootView;
@@ -79,11 +79,11 @@ public class HistoriqueFragment extends Fragment {
                                         }
                                     }
                                 } else {
-                                    Toast.makeText(getContext(), "No history found for this user.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), "Aucun historique trouvé pour cet utilisateur.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         } else {
-                            Toast.makeText(getContext(), "User not found.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Utilisateur non trouvé.", Toast.LENGTH_SHORT).show();
                         }
 
                         progressBar.setVisibility(View.GONE);
@@ -101,7 +101,7 @@ public class HistoriqueFragment extends Fragment {
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getContext(), "Failed to load history: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Échec du chargement de l'historique : " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
