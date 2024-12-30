@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -25,14 +26,16 @@ public class ProfilFragment extends Fragment {
     private static final String TAG = "ProfilFragment";
 
     // TextViews for personal data section
-    private EditText tvNom, tvPrenom, tvEmail, tvPhone, tvDateNaissance, tvSexe, tvTaille, tvPoids;
+    private EditText tvNom, tvPrenom, tvEmail, tvPhone, tvDateNaissance, tvSexe, tvTaille, tvPoids, tvGroupeSanguin, tvDetailsAllergies;
 
     // TextViews for health information section
-    private TextView  tvHandicape, tvDiabetique, tvAllergies, tvGroupeSanguin, tvDetailsAllergies;
+    private TextView  tvHandicape, tvDiabetique, tvAllergies ,details_allergies;
     private ImageButton btnEdit;
     private Button btnSave;
     private DatabaseReference databaseReference;
     private String userId;
+
+    private RadioGroup rgHandicape,rgAllergies , rgDiabetique;
 
 
     @Nullable
@@ -56,6 +59,13 @@ public class ProfilFragment extends Fragment {
         tvAllergies = view.findViewById(R.id.tv_allergies);
         tvGroupeSanguin = view.findViewById(R.id.tv_groupe_sanguin);
         tvDetailsAllergies = view.findViewById(R.id.tv_details_allergies);
+
+        details_allergies = view.findViewById(R.id.details_allergies);
+
+        rgAllergies = view.findViewById(R.id.rg_allergies);
+        rgDiabetique = view.findViewById(R.id.rg_diabetique);
+        rgHandicape = view.findViewById(R.id.rg_handicape);
+
 
         btnEdit = view.findViewById(R.id.btnEdit);
         btnSave = view.findViewById(R.id.btnSave);
@@ -82,9 +92,38 @@ public class ProfilFragment extends Fragment {
                 tvTaille.setEnabled(true);
                 tvSexe.setEnabled(true);
                 tvPoids.setEnabled(true);
+                tvDetailsAllergies.setEnabled(true);
+                tvGroupeSanguin.setEnabled(true);
+
+                // Show radio groups and hide text views
+                tvHandicape.setVisibility(View.GONE);
+                rgHandicape.setVisibility(View.VISIBLE);
+
+                tvAllergies.setVisibility(View.GONE);
+                rgAllergies.setVisibility(View.VISIBLE);
+
+                tvDiabetique.setVisibility(View.GONE);
+                rgDiabetique.setVisibility(View.VISIBLE);
+
                 btnSave.setVisibility(View.VISIBLE);
             }
         });
+
+        rgAllergies.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.rb_allergies_yes) {
+                // Show and enable details_allergies field
+                details_allergies.setVisibility(View.VISIBLE);
+                tvDetailsAllergies.setVisibility(View.VISIBLE);
+                tvDetailsAllergies.setEnabled(true);
+            } else if (checkedId == R.id.rb_allergies_no) {
+                // Hide and disable details_allergies field
+                details_allergies.setVisibility(View.GONE);
+                tvDetailsAllergies.setVisibility(View.GONE);
+                tvDetailsAllergies.setEnabled(false);
+                tvDetailsAllergies.setText(""); // Clear the field if "Non" is selected
+            }
+        });
+
 
         // Save Button Click Listener
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -124,8 +163,10 @@ public class ProfilFragment extends Fragment {
                                     if (user.isAllergies()) {
                                         tvDetailsAllergies.setText(user.getDetailsAllergies() != null ? user.getDetailsAllergies() : "N/A");
                                         tvDetailsAllergies.setVisibility(View.VISIBLE);
+                                        details_allergies.setVisibility(View.VISIBLE);
                                     } else {
                                         tvDetailsAllergies.setVisibility(View.GONE);
+                                        details_allergies.setVisibility(View.GONE);
                                     }
 
                                     tvGroupeSanguin.setText(user.getGroupeSanguin() != null ? user.getGroupeSanguin() : "N/A");
@@ -160,7 +201,9 @@ public class ProfilFragment extends Fragment {
             Toast.makeText(getContext(), "User ID is not available. Please try again later.", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        boolean isHandicape = rgHandicape.getCheckedRadioButtonId() == R.id.rb_handicape_yes;
+        boolean isAllergies = rgAllergies.getCheckedRadioButtonId() == R.id.rb_allergies_yes;
+        boolean isDiabetique = rgDiabetique.getCheckedRadioButtonId() == R.id.rb_diabetique_yes;
         String name = tvNom.getText().toString().trim();
         String firstName = tvPrenom.getText().toString().trim();
         String phone = tvPhone.getText().toString().trim();
@@ -169,12 +212,27 @@ public class ProfilFragment extends Fragment {
         double poids = Double.parseDouble(tvPoids.getText().toString().trim());
         String sexe = tvSexe.getText().toString().trim();
         String birthdate = tvDateNaissance.getText().toString().trim();
+        String group_sanguin = tvGroupeSanguin.getText().toString().trim();
+        String details_allergies_text = "";
+        if (isAllergies) {
+            details_allergies_text = tvDetailsAllergies.getText().toString().trim();
+        }
+
+
+
+
+
 
         if (name.isEmpty() || email.isEmpty()) {
             Toast.makeText(getContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        databaseReference.child("detailsAllergies").setValue(details_allergies_text);
+        databaseReference.child("groupeSanguin").setValue(group_sanguin);
+        databaseReference.child("handicape").setValue(isHandicape);
+        databaseReference.child("allergies").setValue(isAllergies);
+        databaseReference.child("diabetique").setValue(isDiabetique);
         databaseReference.child("nom").setValue(name);
         databaseReference.child("prenom").setValue(firstName);
         databaseReference.child("sexe").setValue(sexe);
@@ -193,6 +251,22 @@ public class ProfilFragment extends Fragment {
                 tvTaille.setEnabled(false);
                 tvSexe.setEnabled(false);
                 tvPoids.setEnabled(false);
+                tvGroupeSanguin.setEnabled(false);
+                tvDetailsAllergies.setEnabled(false);
+                tvHandicape.setVisibility(View.VISIBLE);
+                rgHandicape.setVisibility(View.GONE);
+
+                // Reset views after saving
+                tvHandicape.setText(isHandicape ? "Oui" : "Non");
+                tvAllergies.setText(isAllergies ? "Oui" : "Non");
+                tvDiabetique.setText(isDiabetique ? "Oui" : "Non");
+
+
+                tvAllergies.setVisibility(View.VISIBLE);
+                rgAllergies.setVisibility(View.GONE);
+
+                tvDiabetique.setVisibility(View.VISIBLE);
+                rgDiabetique.setVisibility(View.GONE);
                 btnSave.setVisibility(View.GONE);
             } else {
                 Toast.makeText(getContext(), "Failed to update data", Toast.LENGTH_SHORT).show();

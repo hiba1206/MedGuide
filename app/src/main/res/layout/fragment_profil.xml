@@ -263,6 +263,30 @@
                             android:text="N/A"
                             android:enabled="false"/>
                     </LinearLayout>
+
+                    <!-- Groupe Sanguin -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="4dp">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Groupe Sanguin:"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:textColor="@android:color/black"
+                            />
+                        <EditText
+                            android:id="@+id/tv_groupe_sanguin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="N/A"
+                            android:enabled="false"/>
+                    </LinearLayout>
+
                     <!-- Handicapé -->
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -282,6 +306,23 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="N/A"/>
+                        <RadioGroup
+                            android:id="@+id/rg_handicape"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+                            <RadioButton
+                                android:id="@+id/rb_handicape_yes"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Oui" />
+                            <RadioButton
+                                android:id="@+id/rb_handicape_no"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Non" />
+                        </RadioGroup>
                     </LinearLayout>
 
                     <!-- Diabétique -->
@@ -303,6 +344,24 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="N/A"/>
+                        <RadioGroup
+                            android:id="@+id/rg_diabetique"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+                            <RadioButton
+                                android:id="@+id/rb_diabetique_yes"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Oui" />
+                            <RadioButton
+                                android:id="@+id/rb_diabetique_no"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Non" />
+                        </RadioGroup>
+
                     </LinearLayout>
 
                     <!-- Allergies -->
@@ -324,29 +383,25 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="N/A"/>
-                    </LinearLayout>
-
-                    <!-- Groupe Sanguin -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingBottom="4dp">
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Groupe Sanguin:"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
-                            android:textColor="@android:color/black"/>
-                        <TextView
-                            android:id="@+id/tv_groupe_sanguin"
+                        <RadioGroup
+                            android:id="@+id/rg_allergies"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="N/A"/>
-                    </LinearLayout>
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+                            <RadioButton
+                                android:id="@+id/rb_allergies_yes"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Oui" />
+                            <RadioButton
+                                android:id="@+id/rb_allergies_no"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Non" />
+                        </RadioGroup>
 
+                    </LinearLayout>
                     <!-- Détails des allergies -->
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -354,18 +409,22 @@
                         android:orientation="horizontal"
                         android:paddingBottom="4dp">
                         <TextView
+                            android:id="@+id/details_allergies"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Détails des allergies:"
                             android:textStyle="bold"
                             android:textSize="16sp"
-                            android:textColor="@android:color/black"/>
-                        <TextView
+                            android:textColor="@android:color/black"
+                            android:visibility="gone"/>
+                        <EditText
                             android:id="@+id/tv_details_allergies"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="N/A"/>
+                            android:text="N/A"
+                            android:enabled="false"
+                            android:visibility="gone"/>
                     </LinearLayout>
 
                 </LinearLayout>
