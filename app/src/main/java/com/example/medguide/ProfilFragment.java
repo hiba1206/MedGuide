@@ -5,6 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -22,10 +25,15 @@ public class ProfilFragment extends Fragment {
     private static final String TAG = "ProfilFragment";
 
     // TextViews for personal data section
-    private TextView tvNom, tvPrenom, tvEmail, tvPhone, tvDateNaissance, tvSexe;
+    private EditText tvNom, tvPrenom, tvEmail, tvPhone, tvDateNaissance, tvSexe, tvTaille, tvPoids;
 
     // TextViews for health information section
-    private TextView tvTaille, tvPoids, tvHandicape, tvDiabetique, tvAllergies, tvGroupeSanguin, tvDetailsAllergies;
+    private TextView  tvHandicape, tvDiabetique, tvAllergies, tvGroupeSanguin, tvDetailsAllergies;
+    private ImageButton btnEdit;
+    private Button btnSave;
+    private DatabaseReference databaseReference;
+    private String userId;
+
 
     @Nullable
     @Override
@@ -49,6 +57,9 @@ public class ProfilFragment extends Fragment {
         tvGroupeSanguin = view.findViewById(R.id.tv_groupe_sanguin);
         tvDetailsAllergies = view.findViewById(R.id.tv_details_allergies);
 
+        btnEdit = view.findViewById(R.id.btnEdit);
+        btnSave = view.findViewById(R.id.btnSave);
+
         // Retrieve username passed from SecondActivity or other source
         if (getArguments() != null) {
             String username = getArguments().getString("username");
@@ -58,6 +69,31 @@ public class ProfilFragment extends Fragment {
             }
         }
 
+
+        // Edit Button Click Listener
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvNom.setEnabled(true);
+                tvPrenom.setEnabled(true);
+                tvEmail.setEnabled(true);
+                tvPhone.setEnabled(true);
+                tvDateNaissance.setEnabled(true);
+                tvTaille.setEnabled(true);
+                tvSexe.setEnabled(true);
+                tvPoids.setEnabled(true);
+                btnSave.setVisibility(View.VISIBLE);
+            }
+        });
+
+        // Save Button Click Listener
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveUserData();
+            }
+        });
+
         return view;
     }
 
@@ -65,33 +101,26 @@ public class ProfilFragment extends Fragment {
     private void loadUserData(String username) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
 
-        // Search for user by "username"
         databaseReference.orderByChild("username").equalTo(username)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                                // Retrieve the User object
                                 User user = userSnapshot.getValue(User.class);
-
                                 if (user != null) {
-                                    // Display personal data in TextViews
                                     tvNom.setText(user.getNom() != null ? user.getNom() : "N/A");
                                     tvPrenom.setText(user.getPrenom() != null ? user.getPrenom() : "N/A");
                                     tvEmail.setText(user.getEmail() != null ? user.getEmail() : "N/A");
                                     tvPhone.setText(user.getPhone() != null ? user.getPhone() : "N/A");
                                     tvDateNaissance.setText(user.getDateNaissance() != null ? user.getDateNaissance() : "N/A");
                                     tvSexe.setText(user.getSexe() != null ? user.getSexe() : "N/A");
-
-                                    // Display health information
                                     tvTaille.setText(user.getTaille() != -1 ? String.valueOf(user.getTaille()) : "N/A");
                                     tvPoids.setText(user.getPoids() != -1 ? String.valueOf(user.getPoids()) : "N/A");
                                     tvHandicape.setText(user.isHandicape() ? "Oui" : "Non");
                                     tvDiabetique.setText(user.isDiabetique() ? "Oui" : "Non");
                                     tvAllergies.setText(user.isAllergies() ? "Oui" : "Non");
 
-                                    // Show allergy details only if allergies is true
                                     if (user.isAllergies()) {
                                         tvDetailsAllergies.setText(user.getDetailsAllergies() != null ? user.getDetailsAllergies() : "N/A");
                                         tvDetailsAllergies.setVisibility(View.VISIBLE);
@@ -99,15 +128,18 @@ public class ProfilFragment extends Fragment {
                                         tvDetailsAllergies.setVisibility(View.GONE);
                                     }
 
-                                    // Display blood group
                                     tvGroupeSanguin.setText(user.getGroupeSanguin() != null ? user.getGroupeSanguin() : "N/A");
 
-                                    Log.d(TAG, "User found: " + user.getNom() + " " + user.getPrenom());
-                                    break; // Exit after finding the user
+                                    userId = userSnapshot.getKey(); // Assign userId
+                                    Log.d(TAG, "User ID found: " + userId);
+
+                                    // Initialize databaseReference after userId is fetched
+                                    ProfilFragment.this.databaseReference = FirebaseDatabase.getInstance().getReference("users").child(userId);
+                                    break;
                                 }
                             }
                         } else {
-                            Log.d(TAG, "No user found with this username.");
+                            Log.d(TAG, "No user found with username: " + username);
                             Toast.makeText(getContext(), "Utilisateur non trouvé", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -119,4 +151,53 @@ public class ProfilFragment extends Fragment {
                     }
                 });
     }
+
+
+
+
+    private void saveUserData() {
+        if (userId == null) {
+            Toast.makeText(getContext(), "User ID is not available. Please try again later.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String name = tvNom.getText().toString().trim();
+        String firstName = tvPrenom.getText().toString().trim();
+        String phone = tvPhone.getText().toString().trim();
+        String email = tvEmail.getText().toString().trim();
+        String taille = tvTaille.getText().toString().trim();
+        String poids = tvPoids.getText().toString().trim();
+        String sexe = tvSexe.getText().toString().trim();
+        String birthdate = tvDateNaissance.getText().toString().trim();
+
+        if (name.isEmpty() || email.isEmpty()) {
+            Toast.makeText(getContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        databaseReference.child("nom").setValue(name);
+        databaseReference.child("prenom").setValue(firstName);
+        databaseReference.child("sexe").setValue(sexe);
+        databaseReference.child("phone").setValue(phone);
+        databaseReference.child("taille").setValue(taille);
+        databaseReference.child("poids").setValue(poids);
+        databaseReference.child("dateNaissance").setValue(birthdate);
+        databaseReference.child("email").setValue(email).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(getContext(), "Data updated successfully", Toast.LENGTH_SHORT).show();
+                tvNom.setEnabled(false);
+                tvPrenom.setEnabled(false);
+                tvEmail.setEnabled(false);
+                tvPhone.setEnabled(false);
+                tvDateNaissance.setEnabled(false);
+                tvTaille.setEnabled(false);
+                tvSexe.setEnabled(false);
+                tvPoids.setEnabled(false);
+                btnSave.setVisibility(View.GONE);
+            } else {
+                Toast.makeText(getContext(), "Failed to update data", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }

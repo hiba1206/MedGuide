@@ -21,6 +21,14 @@
             app:cardElevation="8dp"
             app:cardCornerRadius="8dp"
             app:cardBackgroundColor="@android:color/white">
+            <ImageButton
+                android:id="@+id/btnEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_edit"
+                android:contentDescription="Edit"
+                android:background="@null"
+                android:layout_gravity="end" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,11 +67,12 @@
                             android:textStyle="bold"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_nom"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="N/A"/>
+                            android:text="N/A"
+                            android:enabled="false"/>
                     </LinearLayout>
 
                     <!-- Prénom -->
@@ -80,11 +89,12 @@
                             android:textStyle="bold"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_prenom"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="N/A"/>
+                            android:text="N/A"
+                            android:enabled="false"/>
                     </LinearLayout>
 
                     <!-- Email -->
@@ -101,11 +111,12 @@
                             android:textStyle="bold"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_email"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="N/A"/>
+                            android:text="N/A"
+                            android:enabled="false"/>
                     </LinearLayout>
 
                     <!-- Téléphone -->
@@ -122,11 +133,12 @@
                             android:textStyle="bold"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_phone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="N/A"/>
+                            android:text="N/A"
+                            android:enabled="false"/>
                     </LinearLayout>
                     <!-- Date de naissance -->
                     <LinearLayout
@@ -142,11 +154,12 @@
                             android:textStyle="bold"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_date_naissance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="N/A"/>
+                            android:text="N/A"
+                            android:enabled="false"/>
                     </LinearLayout>
 
                     <!-- Sexe -->
@@ -163,11 +176,12 @@
                             android:textStyle="bold"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_sexe"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="N/A"/>
+                            android:text="N/A"
+                            android:enabled="false"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -220,11 +234,12 @@
                             android:textStyle="bold"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_taille"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="N/A"/>
+                            android:text="N/A"
+                            android:enabled="false"/>
                     </LinearLayout>
 
                     <!-- Poids -->
@@ -241,11 +256,12 @@
                             android:textStyle="bold"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_poids"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="N/A"/>
+                            android:text="N/A"
+                            android:enabled="false"/>
                     </LinearLayout>
                     <!-- Handicapé -->
                     <LinearLayout
@@ -354,7 +370,22 @@
 
                 </LinearLayout>
             </LinearLayout>
+
         </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/MedGuide_blue"
+            android:background="@drawable/rounded_cardview"
+            android:text="Enregistrer"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
+
 
     </LinearLayout>
 
