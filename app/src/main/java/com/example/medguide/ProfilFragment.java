@@ -165,8 +165,8 @@ public class ProfilFragment extends Fragment {
         String firstName = tvPrenom.getText().toString().trim();
         String phone = tvPhone.getText().toString().trim();
         String email = tvEmail.getText().toString().trim();
-        String taille = tvTaille.getText().toString().trim();
-        String poids = tvPoids.getText().toString().trim();
+        double taille = Double.parseDouble(tvTaille.getText().toString().trim());
+        double poids = Double.parseDouble(tvPoids.getText().toString().trim());
         String sexe = tvSexe.getText().toString().trim();
         String birthdate = tvDateNaissance.getText().toString().trim();
 
