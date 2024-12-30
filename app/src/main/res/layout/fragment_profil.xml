@@ -59,7 +59,7 @@
                             android:textStyle="bold"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_nom"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
                             android:textStyle="bold"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_prenom"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                             android:textStyle="bold"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_email"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -122,7 +122,7 @@
                             android:textStyle="bold"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_phone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -142,7 +142,7 @@
                             android:textStyle="bold"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_date_naissance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -163,7 +163,7 @@
                             android:textStyle="bold"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_sexe"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -220,11 +220,12 @@
                             android:textStyle="bold"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_taille"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="N/A"/>
+                            android:inputType="number"
+                            android:hint="Taille (cm)"/>
                     </LinearLayout>
 
                     <!-- Poids -->
@@ -241,11 +242,12 @@
                             android:textStyle="bold"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_poids"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="N/A"/>
+                            android:hint="Poids (kg)"
+                            android:inputType="numberDecimal"/>
                     </LinearLayout>
                     <!-- Handicapé -->
                     <LinearLayout
@@ -261,11 +263,11 @@
                             android:textStyle="bold"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
-                        <TextView
-                            android:id="@+id/tv_handicape"
+                        <CheckBox
+                            android:id="@+id/cb_handicape"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="N/A"/>
+                            />
                     </LinearLayout>
 
                     <!-- Diabétique -->
@@ -282,11 +284,11 @@
                             android:textStyle="bold"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
-                        <TextView
-                            android:id="@+id/tv_diabetique"
+                        <CheckBox
+                            android:id="@+id/cb_diabetique"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="N/A"/>
+                             />
                     </LinearLayout>
 
                     <!-- Allergies -->
@@ -303,11 +305,11 @@
                             android:textStyle="bold"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
-                        <TextView
-                            android:id="@+id/tv_allergies"
+                        <CheckBox
+                            android:id="@+id/cb_allergie"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="N/A"/>
+                             />
                     </LinearLayout>
 
                     <!-- Groupe Sanguin -->
@@ -324,7 +326,7 @@
                             android:textStyle="bold"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_groupe_sanguin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -345,7 +347,7 @@
                             android:textStyle="bold"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_details_allergies"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -353,6 +355,14 @@
                     </LinearLayout>
 
                 </LinearLayout>
+                <Button
+                    android:id="@+id/btn_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sauvegarder les modifications"
+                    android:background="@color/white"
+                    android:radius="16dp"
+                    android:textColor="#7E00BCD4"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
