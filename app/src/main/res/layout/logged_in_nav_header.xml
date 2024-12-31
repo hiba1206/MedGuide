@@ -9,22 +9,30 @@
     android:background="@drawable/navheader"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
-        android:id="@+id/profil"
-        android:layout_width="wrap_content"
-        android:layout_height="47dp"
-        android:src="@drawable/profilelogo"
-        android:onClick="onProfileImageClick" />
+    <!-- Layout pour aligner l'image et le texte horizontalement -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
 
-    <TextView
-        android:id="@+id/tv_username"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="username"
-    android:textColor="@color/black"
-    android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/profil"
+            android:layout_width="47dp"
+            android:layout_height="47dp"
+            android:src="@drawable/profil"
+            android:onClick="onProfileImageClick"
+            android:layout_marginEnd="8dp" />
 
-
-
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="username"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+    </LinearLayout>
 
 </LinearLayout>
